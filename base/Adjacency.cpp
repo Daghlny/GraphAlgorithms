@@ -28,20 +28,40 @@ template<typename vertexT> void*
 base::AdjaList<typename>::findVertex(vertex_t id){
 	adjaNode *curr = head;
 	while(curr != NULL){
-		if(curr->vertexID == id)
+		if(curr->vid == id)
 			return std::static_cast<void *>(curr);
 		curr = curr->next;
 	}
 	return NULL;
 }
 
-template<typename vertexT> void
-base::AdjaList<typename>::deleteEdge(vertex_t id){
+template<typename vertexT> bool
+base::AdjaList<typename>::deleteEdge(vertex_t vid){
 	adjaNode *pre = head, *curr = head;
-	/* something need done future */
-	while(curr != NULL){
-		
+	if(vid == val)
+		return false;
+	if(vid == head->vid){
+		head = head->next;
+		delete head;
+		num--;
+		return true;
 	}
+	
+	adjaNode *pre  = head;
+	adjaNode *curr = head->next;
+
+	while(curr != NULL){
+		if(curr->vid == vid){
+			pre->next = curr->next;
+			delete curr;
+			num--;
+			return true;
+		}
+		pre = pre->next;
+		curr = curr->next;
+	}
+	
+	return false;
 }
 
 

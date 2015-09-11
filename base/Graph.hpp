@@ -13,8 +13,12 @@ class Graph{
 		Graph(size_t vertex_sum):aList(vertex_sum){}
 		
 		bool addEdge(vertex_t sour, vertex_t dest);
+		bool deleteEdge(vertex_t sour, vertex_t dest);
+		bool deleteEdge(edge_t e);
+		
 		size_t getVertexSum(){ return aList.size(); }
 		size_t getEdgeSum();
+		const AdjaList& getAdjaList(vertex_t vid);
 
 	private:
 		std::vactor<AdjaList<vertex_t>> aList;

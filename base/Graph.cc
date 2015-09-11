@@ -19,3 +19,28 @@ base::Graph::getEdgeSum(){
 	}
 	return sum;
 }
+
+template<typename edgeT = uint64_t, typename vertexT = uint32_t>
+bool base::Graph::getAdjaList(vertex_t vid){
+	return aList[vid];
+}
+
+template<typename edgeT = uint64_t, typename vertexT = uint32_t>
+bool base::Graph::deleteEdge(vertex_t sour, vertex_t dest){
+	if(sour >= getVertexSum() || dest >= getVertexSum())
+		return false;
+	AdjaList cur_list = edges[sour];
+	return cur_list.deleteEdge(dest);
+}
+
+template<typename edgeT = uint64_t, typename vertexT = uint32_t>
+bool base::Graph::deleteEdge(edge_t e){
+	size_t e_size = sizeof(edgeT);
+	size_t v_size = sizeof(vertexT);
+	if(e_size != 2*v_size)
+		return false;
+	
+	vertex_t sour = e << v_size;
+	vertex_t dest = e & (0xffffffffffffffff >> (64-v_size));
+	return deleteEdge(sour, dest);
+}

@@ -10,8 +10,8 @@ class adjaNode{
 		typedef vertexT vertex_t;
 		friend class AdjaList;
 
-		adjaNode(): vertexID(-1), next(NULL){}
-		adjaNode(vertex_t id):vertexID(id), next(NULL){}
+		adjaNode(): vid(-1), next(NULL){}
+		adjaNode(vertex_t id):vid(id), next(NULL){}
 		~adjaNode(){
 			
 		}
@@ -19,7 +19,7 @@ class adjaNode{
 		adjaNode &getNext();
 		void addNext(vertex_t id);
 
-		vertex_t vertexID;
+		vertex_t vid;
 	private:
 		adjaNode *next;
 }
@@ -35,7 +35,7 @@ class AdjaList{
 		
 		void addEdge(vertex_t id);
 		void *findEdge(vertex_t id);
-		void deleteEdge(vertex_t id);
+		bool deleteEdge(vertex_t id);
 
 		void getListSize(){return num;}
 
