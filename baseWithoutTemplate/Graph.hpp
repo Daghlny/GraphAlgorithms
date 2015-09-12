@@ -1,6 +1,10 @@
 #ifndef __BASE__NT__GRAPH__HPP__
 #define __BASE__NT__GRAPH__HPP__
 
+#include<vector>
+#include<utility>
+#include"AdjaList.hpp"
+
 namespace base{
 
 class Graph{
@@ -20,6 +24,7 @@ class Graph{
 		bool deleteEdge(edge_t e);
 
 		const AdjaList& getList(vertex_t sour);
+		size_t vsize(){return vertex_sum;}
 
 	private:
 		std::vector<AdjaList> aList; size_t vertex_sum; 

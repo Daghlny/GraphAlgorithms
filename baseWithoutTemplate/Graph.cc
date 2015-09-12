@@ -1,3 +1,8 @@
+
+#include<vector>
+#include<utility>
+#include"AdjaList.hpp"
+
 bool
 base::Graph::addEdge(vertex_t sour, vertex_t dest){
 	if(sour >= vertex_sum || dest >= vertex_sum)

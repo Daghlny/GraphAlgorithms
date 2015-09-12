@@ -16,6 +16,7 @@ class AdjaList{
 		void addEdge(Graph::vertex_t dest);
 		bool findNode(Graph::vertex_t dest);
 		bool deleteNode(Graph::vertex_t dest);
+		AdjaNode *getHead(){return head;}
 
 	private:
 		AdjaNode *head;

@@ -10,7 +10,6 @@ class AdjaNode{
 		AdjaNode():vid(-1), next(NULL){}
 		AdjaNode(Graph::vertex_t vvid): vid(vvid), next(NULL){}
 		friend class AdjaList;
-	private:
 		Graph::vertex_t vid;
 		AdjaNode *next;
 };
