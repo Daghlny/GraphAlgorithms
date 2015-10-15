@@ -7,36 +7,33 @@
 
 #include<vector>
 #include<map>
+#include<set>
 #include<cstdint>
 #include<utility>
 
 int wp_cmp_func(const vseq_t &x, const vseq_t &y);
 
-uint32_t
+size_t
 GreedyColoring::run_wp(){
-	uint32_t color_num = 0;
-	std::map<vertex_id_t, uint32_t> vtx_color;
+	size_t color_num = 0;
+	
+	//vtx_color is replaced by colors
+	//std::map<vertex_id_t, uint32_t> vtx_color;
+	
 	for(std::vector<vertex_id_t>::iterator iter = seq.begin();
 		iter != seq.end();
 		++iter){
 		//these codes could be optimized
-		//espacily the vtx_color default value
-		if(vtx_color.find(*iter) == vtx_color.end()){
-			vtx_color[*iter] = 0;
-		}
-		AdjaList &cur_adjalist = g->getAdjaList(*iter);
-		adjaNode head = cur_adjalist.getHead();
-		while(head != NULL){
-			if(vtx_color.find(head->Nid) == vtx_color.end()){
-				if(vtx_color.find(*iter) != 1)
-					vtx_color[head->Nid] = 1;
-				else
-					vtx_color[head->Nid] = 0;
-			}
-		}
+		//espacily the colors default value
+		
+		color_t curColor = get_first_avail_color(*iter);
+		colors.insert(std::make_pair(*iter, curColor));
+
 	}
+	return get_color_sum(colors);
 }
 
+//initial the sequence that indicates the order of vertexs for coloring
 void
 GreedyColoring::init_wp_seq(){
 	std::vector<std::pair<vertex_id_t, uint32_t>> tmp_vec(g->getVertexsNum());
@@ -56,23 +53,44 @@ GreedyColoring::init_wp_seq(){
 	
 }
 
-bool
-GreedyColoring::neibour_colors(std::vector<uint32_t> *colors,
-			       vertex_id_t sour){
-	colors.clear();
-	const AdjaList &cur_alist = g->getAdjaList(sour);
-	for(
+//replaced by get_first_avail_color(vertex_id_t sour)
+
+color_t
+GreedyColoring::get_first_avail_color(vertex_id_t sour){
+	
+	const AdjaList &c_alist = g->getAdjaList(sour);
+	adjaNode *head = c_alist.getHead();
+	std::set<color_t> no_colors;
+	std::vector<vertex_id_t>::iterator pos;
+	
+	//add all adjaceny vertexs into the no_colors to avoid the conflict
+	while(head != NULL){
+		if((pos = colors.find(head->Nid)) != colors.end())
+			no_colors.insert(pos->second);
+	}
+	
+	//check the smallest color donesn't exist in the @no_colors;
+	for(color_t i = 0;; ++i){
+		if(no_colors.count(i) == 0)
+			return i;
+	}
 }
 
-uint32_t
-GreedyColoring::get_color(vertex_id_t sour){
-	std::vector<vertex_id_t>
-	if((	
-}
 int wp_cmp_func(const vseq_t &x, const vseq_t &y){
 	return x.second > y.second;
 }
 
+color_t
+GreedyColoring::get_color_sum(std::map<vertex_id_t, color_t> colors){
+	color_t max_color = 0;
+	for(std::map<vertex_id_t, color_t>::iterator iter = colors.begin();
+		iter != colors.end();
+		++iter){
+			max_color = max_color > iter->second ?
+						max_color : iter->second;
+		}
+	return max_color;
+}
 
 
 
