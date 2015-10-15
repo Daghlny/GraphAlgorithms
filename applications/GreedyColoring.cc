@@ -56,6 +56,40 @@ GreedyColoring::init_wp_seq(){
 	
 }
 
+bool
+GreedyColoring::neibour_colors(std::vector<uint32_t> *colors,
+			       vertex_id_t sour){
+	colors.clear();
+	const AdjaList &cur_alist = g->getAdjaList(sour);
+	for(
+}
+
+uint32_t
+GreedyColoring::get_color(vertex_id_t sour){
+	std::vector<vertex_id_t>
+	if((	
+}
 int wp_cmp_func(const vseq_t &x, const vseq_t &y){
 	return x.second > y.second;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

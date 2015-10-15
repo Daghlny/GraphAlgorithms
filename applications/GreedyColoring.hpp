@@ -23,6 +23,10 @@ class GreedyColoring{
 	private:
 		void init_wp_seq();
 		void init_br_seq();
+
+		bool neibour_colors(std::vector<uint32_t> *colors,
+				    vertex_id_t sour);
+		uint32_t get_color(vertex_id_t sour);
 	
 		Graph *g;
 		std::vector<vertex_id_t> seq;
