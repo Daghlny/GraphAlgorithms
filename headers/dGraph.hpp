@@ -9,6 +9,7 @@
 #include"Graph.hpp"
 #include<vector>
 #include<deque>
+#include<map>
 #include<iostream>
 #include<cstdint>
 #include<algorithm>
@@ -16,7 +17,7 @@
 // class represents an directd graph
 // the attribute @adjalists means the adjalists of all vertexs
 
-class dGraph{
+class dGraph: public Graph{
 public:
 	dGraph(){}
 	dGraph(usize_t vertexSum): nList(vertex_num){}
@@ -31,11 +32,19 @@ public:
 	bool find_edge(vertex_id_t sour, vertex_id_t dest);
 
 private:
-	std::vector<adjaList> adjalists;
+	std::map<vertex_id_t, adjaList> alists;
 
 };
 
+void
+dGraph::add_edge(vertex_id_t sour, vertex_id_t dest){
+	alists[sour].add_edge(dest);
+}
 
+void
+dGraph::del_edge(vertex_id_t sour, vertex_id_t dest){
+	alists[sour].del_edge(dest);
+}
 
 
 

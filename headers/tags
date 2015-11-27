@@ -1,0 +1,64 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AdjaList	AdjaList.hpp	/^		AdjaList():head(0), tail(0), num(0){}$/;"	f	class:AdjaList
+AdjaList	AdjaList.hpp	/^class AdjaList{$/;"	c
+BFS	Graph.hpp	/^Graph::BFS(vertex_id_t sour){$/;"	f	class:Graph
+Graph	Graph.hpp	/^		Graph(uint64_t vertex_num): nList(vertex_num){}$/;"	f	class:Graph
+Graph	Graph.hpp	/^class Graph{$/;"	c
+Graph	temp_Graph.hpp	/^class Graph{$/;"	c
+LINE_MAX	buildGraph.hpp	9;"	d
+Nid	AdjaList.hpp	/^		vertex_id_t Nid;$/;"	m	class:adjaNode
+__HEADERS__ADJALIST__HPP__	adjaList.hpp	6;"	d
+__HEADERS__ADJALIST__H__	AdjaList.hpp	2;"	d
+__HEADERS__BUILDGRAPH__H__	buildGraph.hpp	2;"	d
+__HEADERS__D__GRAPH__HPP__	dGraph.hpp	6;"	d
+__HEADERS__GRAPH__HPP__	temp_Graph.hpp	7;"	d
+__HEADERS__GRAPH__H__	Graph.hpp	2;"	d
+__HEADERS__TYPES__HPP__	types.hpp	2;"	d
+a_node	types.hpp	/^struct a_node{$/;"	s
+addEdge	AdjaList.hpp	/^AdjaList::addEdge(vertex_id_t destID){$/;"	f	class:AdjaList
+addEdge	Graph.hpp	/^Graph::addEdge(vertex_id_t sour, vertex_id_t dest){$/;"	f	class:Graph
+add_edge	adjaList.hpp	/^adjaList::add_edge(vertex_id_t u){$/;"	f	class:adjaList
+add_edge	dGraph.hpp	/^dGraph::add_edge(vertex_id_t sour, vertex_id_t dest){$/;"	f	class:dGraph
+adjaList	adjaList.hpp	/^	adjaList():head(NULL), tail(NULL), num(0){}$/;"	f	class:adjaList
+adjaList	adjaList.hpp	/^class adjaList{$/;"	c
+adjaNode	AdjaList.hpp	/^class adjaNode{$/;"	c
+alists	dGraph.hpp	/^	std::map<vertex_id_t, adjaList> alists;$/;"	m	class:dGraph
+buildGraph	buildGraph.hpp	/^class buildGraph{$/;"	c
+buildGraphByFile	buildGraph.hpp	/^buildGraph::buildGraphByFile(std::string filename, uint64_t vertex_num){$/;"	f	class:buildGraph
+dGraph	dGraph.hpp	/^	dGraph(){}$/;"	f	class:dGraph
+dGraph	dGraph.hpp	/^	dGraph(usize_t vertexSum): nList(vertex_num){}$/;"	f	class:dGraph
+dGraph	dGraph.hpp	/^class dGraph: public Graph{$/;"	c
+del_edge	adjaList.hpp	/^adjaList::del_edge(vertex_id_t u){$/;"	f	class:adjaList
+del_edge	dGraph.hpp	/^dGraph::del_edge(vertex_id_t sour, vertex_id_t dest){$/;"	f	class:dGraph
+deleteEdge	AdjaList.hpp	/^AdjaList::deleteEdge(vertex_id_t destID){$/;"	f	class:AdjaList
+deleteEdge	Graph.hpp	/^Graph::deleteEdge(vertex_id_t sour, vertex_id_t dest){$/;"	f	class:Graph
+edge_id_t	types.hpp	/^typedef uint64_t edge_id_t;$/;"	t
+findNode	AdjaList.hpp	/^AdjaList::findNode(vertex_id_t destID){$/;"	f	class:AdjaList
+find_edge	adjaList.hpp	/^adjaList::find_edge(vertex_id_t u){$/;"	f	class:adjaList
+getAdjaList	Graph.hpp	/^Graph::getAdjaList(vertex_id_t sour){$/;"	f	class:Graph
+getAdjaListSize	Graph.hpp	/^		size_t getAdjaListSize(vertex_id_t sour){ return nList[sour].size();}$/;"	f	class:Graph
+getHead	AdjaList.hpp	/^		adjaNode *getHead(){ return head;}$/;"	f	class:AdjaList
+getTail	AdjaList.hpp	/^		adjaNode *getTail(){ return tail;}$/;"	f	class:AdjaList
+getVertexsNum	Graph.hpp	/^		uint64_t getVertexsNum(){ return nList.size();}$/;"	f	class:Graph
+head	AdjaList.hpp	/^		adjaNode *head;$/;"	m	class:AdjaList
+head	adjaList.hpp	/^	a_node  *head;$/;"	m	class:adjaList
+nList	Graph.hpp	/^		std::vector<AdjaList> nList;$/;"	m	class:Graph
+next	AdjaList.hpp	/^		adjaNode *next;$/;"	m	class:adjaNode
+next	types.hpp	/^	struct a_node *next;$/;"	m	struct:a_node	typeref:struct:a_node::a_node
+nid	types.hpp	/^	vertex_id_t nid;$/;"	m	struct:a_node
+num	AdjaList.hpp	/^		size_t   num;$/;"	m	class:AdjaList
+num	adjaList.hpp	/^	usize_t num;$/;"	m	class:adjaList
+pre	AdjaList.hpp	/^		adjaNode *pre;$/;"	m	class:adjaNode
+pre	types.hpp	/^	struct a_node *pre;$/;"	m	struct:a_node	typeref:struct:a_node::a_node
+size	AdjaList.hpp	/^		size_t   size(){return num;}$/;"	f	class:AdjaList
+size	adjaList.hpp	/^	usize_t size(){return num;}$/;"	f	class:adjaList
+tail	AdjaList.hpp	/^		adjaNode *tail;$/;"	m	class:AdjaList
+tail	adjaList.hpp	/^	a_node  *tail;$/;"	m	class:adjaList
+usize_t	types.hpp	/^typedef uint64_t usize_t; $/;"	t
+vertex_id_t	AdjaList.hpp	/^typedef uint64_t vertex_id_t;$/;"	t
+vertex_id_t	types.hpp	/^typedef uint32_t vertex_id_t;$/;"	t
