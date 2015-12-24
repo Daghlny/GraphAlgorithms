@@ -2,10 +2,14 @@
 #define __HEADERS__TYPES__HPP__
 
 #include<cstdint>
+#include<set>
+
+typedef uint32_t vtx_t;
+typedef uint64_t edg_t;
+
+typedef std::set<vtx_t> ajcl_t;
 
 typedef uint64_t usize_t; 
-typedef uint64_t edge_id_t;
-typedef uint32_t vertex_id_t;
 
 class u_Graph;
 class adjaList;
