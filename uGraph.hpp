@@ -1,26 +1,24 @@
-#ifndef __GA__DIGRAPH__HPP__
-#define __GA__DIGRAPH__HPP__
+#ifndef __GA__UGRAPH__HPP__
+#define __GA__UGRAPH__HPP__
 
 #include<set>
 #include<map>
 #include<fstream>
 #include<string>
-#include<algorithm>
 #include<utility>
 #include<iostream>
 
 #include"types.hpp"
 
-typedef std::map<vid_t, adj_t> dig_t;
+typedef std::map<vid_t, adj_t> ug_t;
 
-// the objects of this class represent a directed graph
+// the objects of this class represent a undirected graph
 // the class supply some basic operations
-// data of a diGraph connot be changed after the building phase
-
-class diGraph{
+// data of a uGraph connot be changed after the building phase
+class uGraph{
 	public:
-		diGraph(){}
-		diGraph(char *file){ read_graph_data(file); }
+		uGraph(){}
+		uGraph(char *file){read_graph_data(file);}
 
 		void  read_graph_data(char *file);
 
@@ -29,7 +27,7 @@ class diGraph{
 		usize_t       vtx_sum();
 		
 	private:
-		dig_t data;
+		ug_t data;
 
 		void add_edg(vid_t sour, vid_t dest);
 
@@ -55,6 +53,7 @@ diGraph::read_graph_data(char *file){
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 
 		add_edg(sour, dest);
+		add_edg(dest, sour);
 	}
 	in_f.close();
 }
