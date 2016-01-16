@@ -2,6 +2,8 @@
 #define __GA__ALGORITHMS__TYPES__HPP__
 
 #include<cstdint>
+#include<algorithm>
+#include<iostream>
 #include"../basic/types.hpp"
 
 struct tri_t{
@@ -10,6 +12,7 @@ struct tri_t{
 		vid_arr[0] = f;
 		vid_arr[1] = s;
 		vid_arr[2] = t;
+		sort_seq();
 	}	
 	
 	friend bool operator<(const tri_t& lhs, const tri_t& rhs);
@@ -31,6 +34,10 @@ struct tri_t{
 				return true;
 		return false;
 	}
+	
+	void sort_seq(){
+		std::sort(vid_arr, vid_arr+3);
+	}
 
 	private:
 		vid_t vid_arr[3];
@@ -38,18 +45,14 @@ struct tri_t{
 
 inline bool 
 operator<(const tri_t& lhs, const tri_t& rhs){
-	if(lhs[0] < rhs[0])
-		return true;
-	else if(lhs[0] > rhs[0])
-		return false;
-	if(lhs[1] < rhs[1])
-		return true;
-	else if(lhs[1] > rhs[1])
-		return false;
-	if(lhs[2] < rhs[2])
-		return true;
-	else if(lhs[2] > rhs[2])
-		return false;
+	//std::cout << "*** *** ***" << std::endl;
+	//std::cout << lhs[0] << '\t' << lhs[1] << '\t' << lhs[2] << std::endl;
+	//std::cout << rhs[0] << '\t' << rhs[1] << '\t' << rhs[2] << std::endl;
+	for(int i = 0; i != 3; ++i){
+		if(lhs[i] < rhs[i])  return true;
+		else if(lhs[i] > rhs[i]) return false;
+	}
+	return false;
 }
 
 inline bool
@@ -62,5 +65,6 @@ operator==(const tri_t& lhs, const tri_t& rhs){
 	}	
 	return true;
 }
+
 #endif
 

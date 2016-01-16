@@ -2,7 +2,7 @@
 #include"../basic/uGraph.hpp"
 #include"../algorithms/algorithms_types.hpp"
 
-size_t tc_for_ugraph(std::set<tri_t> *res, const uGraph* ug);
+size_t tc_for_ugraph(std::set<tri_t> *res, uGraph* ug);
 
 int
 main(int argc, char **argv){

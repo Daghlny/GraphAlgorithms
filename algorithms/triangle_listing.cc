@@ -29,10 +29,13 @@ tc_for_ugraph(std::set<tri_t> *res,uGraph* ug){
 				if(tmp_adj.find(*_pos) != tmp_adj.end()){
 					tri_t* new_tri = new tri_t(*iter, *pos, *_pos);
 					res->insert(*new_tri);
+					delete new_tri;
 				}
 			}
 		}
 	}
+
+	delete vs;
 
 	return res->size();	
 
