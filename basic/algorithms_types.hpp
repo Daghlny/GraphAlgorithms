@@ -4,7 +4,7 @@
 #include<cstdint>
 #include<algorithm>
 #include<iostream>
-#include"../basic/types.hpp"
+#include"types.hpp"
 
 struct tri_t{
 	

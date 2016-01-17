@@ -2,9 +2,9 @@
 #include<set>
 #include<map>
 
-#include"../basic/types.hpp"
-#include"../basic/uGraph.hpp"
-#include"../basic/diGraph.hpp"
+#include"types.hpp"
+#include"uGraph.hpp"
+#include"diGraph.hpp"
 
 #include"algorithms_types.hpp"
 

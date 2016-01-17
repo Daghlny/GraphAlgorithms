@@ -1,16 +1,16 @@
-#include"../uGraph.hpp"
 
+#include"diGraph.hpp"
 #include<set>
 #include<map>
 #include<fstream>
-#include<utility>
 #include<string>
 #include<algorithm>
+#include<utility>
 #include<iostream>
 
 // init the graph object with a datafile in adjacency list format
 void
-uGraph::read_graph_data(char *file){
+diGraph::read_graph_data(char *file){
 	std::ifstream in_f;
 	in_f.open(file);
 
@@ -28,46 +28,37 @@ uGraph::read_graph_data(char *file){
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 
 		add_edg(sour, dest);
-		add_edg(dest, sour);
 	}
 	in_f.close();
 }
 
 // add a new edge into the @data, this function is private
 void
-uGraph::add_edg(vid_t sour, vid_t dest){
-	ug_t::iterator iter = data.find(sour);
+diGraph::add_edg(vid_t sour, vid_t dest){
+	dig_t::iterator iter = data.find(sour);
 	if(iter == data.end()){
 		
 		std::pair<vid_t, adj_t> new_item = std::make_pair(sour, adj_t());
 		data.insert(new_item);
 	}
-	(data[sour]).insert(dest);
+	data[sour].insert(dest);
 }
 
 // return the adjacency list's size of certain vertex
 usize_t 
-uGraph::adj_size(vid_t sour){
-	return (data[sour]).size();
+diGraph::adj_size(vid_t sour){
+	return data[sour].size();
 }
 
 // return the adjacency list of certain vertex
 const adj_t& 
-uGraph::get_adj(vid_t sour){
+diGraph::get_adj(vid_t sour){
 	return data[sour];
 }
 
 // return the size of vertices' set
 usize_t
-uGraph::vtx_sum(){
+diGraph::vtx_sum(){
 	return data.size();
 }
 
-void
-uGraph::vtx_set(std::set<vid_t>* vs){
-	for(typename ug_t::iterator iter = data.begin();
-		iter != data.end();
-		++iter){
-		vs->insert(iter->first);
-	}	
-}
