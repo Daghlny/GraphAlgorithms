@@ -1,7 +1,7 @@
 #include<iostream>
 #include<ctime>
-#include"../basic/uGraph.hpp"
-#include"../algorithms/algorithms_types.hpp"
+#include"uGraph.hpp"
+#include"algorithms_types.hpp"
 
 size_t tc_for_ugraph(std::set<tri_t> *res, uGraph* ug);
 

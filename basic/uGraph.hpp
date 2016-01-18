@@ -7,14 +7,14 @@
 #include<string>
 
 #include"types.hpp"
-#include"Graph.hpp"
+//#include"Graph.hpp"
 
 typedef std::map<vid_t, adj_t> ug_t;
 
 // the objects of this class represent a undirected graph
 // the class supply some basic operations
 // data of a uGraph connot be changed after the building phase
-class uGraph: public Graph{
+class uGraph{
 	public:
 		uGraph(){}
 		uGraph(char *file){read_graph_data(file);}
