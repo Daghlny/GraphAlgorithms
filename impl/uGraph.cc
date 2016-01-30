@@ -72,3 +72,4 @@ uGraph::vtx_set(std::set<vid_t>* vs){
 		vs->insert(iter->first);
 	}	
 }
+
