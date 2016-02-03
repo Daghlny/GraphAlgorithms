@@ -7,7 +7,7 @@ class Graph{
 		Graph(){}
 		Graph(const Graph& g);
 
-		virtual void read_graph_data(char *file);
+		virtual void       read_graph_data(char *file);
 
 		usize_t            adj_size(vid_t sour);
 		const adj_t&       get_adj(vid_t sour);

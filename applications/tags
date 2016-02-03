@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BFS	BFS.cc	/^BFS(const Graph &g, Graph::vertex_t sour, visitFcn visit){$/;"	f
+BFS	BFS.cc	/^BFS(const Graph& g){$/;"	f
+GreedyColoring	GreedyColoring.hpp	/^		GreedyColoring(Graph *x_g): g(x_g){}$/;"	f	class:GreedyColoring
+GreedyColoring	GreedyColoring.hpp	/^class GreedyColoring{$/;"	c
+__APP__GREEDYCOLORING__HPP__	GreedyColoring.hpp	5;"	d
+color_t	GreedyColoring.hpp	/^		typedef uint32_t color_t;$/;"	t	class:GreedyColoring
+colors	GreedyColoring.hpp	/^		std::map<vertex_id_t, color_t> colors;$/;"	m	class:GreedyColoring
+g	GreedyColoring.hpp	/^		Graph *g;$/;"	m	class:GreedyColoring
+get_color_sum	GreedyColoring.cc	/^GreedyColoring::get_color_sum(std::map<vertex_id_t, color_t> colors){$/;"	f	class:GreedyColoring
+get_first_avail_color	GreedyColoring.cc	/^GreedyColoring::get_first_avail_color(vertex_id_t sour){$/;"	f	class:GreedyColoring
+init_wp_seq	GreedyColoring.cc	/^GreedyColoring::init_wp_seq(){$/;"	f	class:GreedyColoring
+printVertex	BFS.cc	/^printVertex(Graph::vertex_t v){$/;"	f
+run_wp	GreedyColoring.cc	/^GreedyColoring::run_wp(){$/;"	f	class:GreedyColoring
+seq	GreedyColoring.hpp	/^		std::vector<vertex_id_t> seq;$/;"	m	class:GreedyColoring
+storeVertex	BFS.cc	/^storeVertex(Graph::vertex_t v){$/;"	f
+visitFcn	BFS.cc	/^typedef void (*visitFcn)(Graph::vertex_t);$/;"	t	file:
+vseq_t	GreedyColoring.hpp	/^		typedef std::pair<vertex_id_t, color_t> vseq_t;$/;"	t	class:GreedyColoring
+wp_cmp_func	GreedyColoring.cc	/^int wp_cmp_func(const vseq_t &x, const vseq_t &y){$/;"	f

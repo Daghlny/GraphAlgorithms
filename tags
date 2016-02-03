@@ -1,0 +1,123 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AdjaList	old_files/convert/AdjaList.hpp	/^		AdjaList():head(0), tail(0), num(0){}$/;"	f	class:AdjaList
+AdjaList	old_files/convert/AdjaList.hpp	/^class AdjaList{$/;"	c
+BFS	old_files/applications/BFS.cc	/^BFS(const Graph &g, Graph::vertex_t sour, visitFcn visit){$/;"	f
+BFS	old_files/applications/BFS.cc	/^BFS(const Graph& g){$/;"	f
+BFS	old_files/convert/Graph.hpp	/^Graph::BFS(vertex_id_t sour){$/;"	f	class:Graph
+CliqueEnumeration	old_files/applications/CliqueSimple.cc	/^CliqueEnumeration(std::set<uint32_t> &C, $/;"	f
+DGraphIntersection	old_files/convert/DGraphIntersection.hpp	/^		DGraphIntersection(): curr_flag(1), refreshed(1), graph_num(0){}$/;"	f	class:DGraphIntersection
+DGraphIntersection	old_files/convert/DGraphIntersection.hpp	/^		DGraphIntersection(std::string filename): curr_flag(1), refreshed(1), graph_num(0){$/;"	f	class:DGraphIntersection
+DGraphIntersection	old_files/convert/DGraphIntersection.hpp	/^		DGraphIntersection(std::vector<std::string> &filenames, std::string logname = ""): $/;"	f	class:DGraphIntersection
+DGraphIntersection	old_files/convert/DGraphIntersection.hpp	/^class DGraphIntersection{$/;"	c
+Graph	basic/Graph.hpp	/^		Graph(){}$/;"	f	class:Graph
+Graph	basic/Graph.hpp	/^class Graph{$/;"	c
+Graph	old_files/convert/Graph.hpp	/^		Graph(uint64_t vertex_num): nList(vertex_num){}$/;"	f	class:Graph
+Graph	old_files/convert/Graph.hpp	/^class Graph{$/;"	c
+GreedyColoring	old_files/applications/GreedyColoring.hpp	/^		GreedyColoring(Graph *x_g): g(x_g){}$/;"	f	class:GreedyColoring
+GreedyColoring	old_files/applications/GreedyColoring.hpp	/^class GreedyColoring{$/;"	c
+LINE_MAX	old_files/convert/DGraphIntersection.hpp	19;"	d
+LINE_MAX	old_files/convert/buildGraph.hpp	9;"	d
+Nid	old_files/convert/AdjaList.hpp	/^		vertex_id_t Nid;$/;"	m	class:adjaNode
+__ADJALIST__H__	old_files/convert/AdjaList.hpp	2;"	d
+__APP__GREEDYCOLORING__HPP__	old_files/applications/GreedyColoring.hpp	5;"	d
+__BUILDGRAPH__H__	old_files/convert/buildGraph.hpp	2;"	d
+__D__GROUP__INTERSECTION__	old_files/convert/DGraphIntersection.hpp	8;"	d
+__GA__ALGORITHMS__TYPES__HPP__	basic/algorithms_types.hpp	2;"	d
+__GA__DIGRAPH__HPP__	basic/diGraph.hpp	2;"	d
+__GA__GRAPH__HPP__	basic/Graph.hpp	3;"	d
+__GA__UGRAPH__HPP__	basic/uGraph.hpp	3;"	d
+__GRAPH__H__	old_files/convert/Graph.hpp	2;"	d
+__HEADERS__TYPES__HPP__	basic/types.hpp	2;"	d
+addEdge	old_files/convert/AdjaList.hpp	/^AdjaList::addEdge(vertex_id_t destID){$/;"	f	class:AdjaList
+addEdge	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::addEdge(vertex_t sour, vertex_t dest){$/;"	f	class:DGraphIntersection
+addEdge	old_files/convert/Graph.hpp	/^Graph::addEdge(vertex_id_t sour, vertex_id_t dest){$/;"	f	class:Graph
+add_edg	impl/diGraph.cc	/^diGraph::add_edg(vid_t sour, vid_t dest){$/;"	f	class:diGraph
+add_edg	impl/uGraph.cc	/^uGraph::add_edg(vid_t sour, vid_t dest){$/;"	f	class:uGraph
+adj_size	impl/diGraph.cc	/^diGraph::adj_size(vid_t sour){$/;"	f	class:diGraph
+adj_size	impl/uGraph.cc	/^uGraph::adj_size(vid_t sour){$/;"	f	class:uGraph
+adj_t	basic/types.hpp	/^typedef std::set<vid_t> adj_t;$/;"	t
+adjaNode	old_files/convert/AdjaList.hpp	/^class adjaNode{$/;"	c
+buildGraph	old_files/convert/buildGraph.hpp	/^class buildGraph{$/;"	c
+buildGraphByFile	old_files/convert/buildGraph.hpp	/^buildGraph::buildGraphByFile(std::string filename, uint64_t vertex_num){$/;"	f	class:buildGraph
+changeEdgeFlag	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::changeEdgeFlag(edge_t e){$/;"	f	class:DGraphIntersection
+color_t	old_files/applications/GreedyColoring.hpp	/^		typedef uint32_t color_t;$/;"	t	class:GreedyColoring
+colors	old_files/applications/GreedyColoring.hpp	/^		std::map<vertex_id_t, color_t> colors;$/;"	m	class:GreedyColoring
+convert2Edge	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::convert2Edge(vertex_t sour, vertex_t dest){$/;"	f	class:DGraphIntersection
+curr_flag	old_files/convert/DGraphIntersection.hpp	/^		int8_t curr_flag;$/;"	m	class:DGraphIntersection
+data	basic/diGraph.hpp	/^		dig_t data;$/;"	m	class:diGraph
+data	basic/uGraph.hpp	/^		ug_t data;$/;"	m	class:uGraph
+diGraph	basic/diGraph.hpp	/^		diGraph(){}$/;"	f	class:diGraph
+diGraph	basic/diGraph.hpp	/^		diGraph(char *file){ read_graph_data(file); }$/;"	f	class:diGraph
+diGraph	basic/diGraph.hpp	/^class diGraph{$/;"	c
+dig_t	basic/diGraph.hpp	/^typedef std::map<vid_t, adj_t> dig_t;$/;"	t
+edg_t	basic/types.hpp	/^typedef uint64_t edg_t;$/;"	t
+edge_num	basic/Graph.hpp	/^		usize_t            edge_num;$/;"	m	class:Graph
+edge_t	old_files/convert/DGraphIntersection.hpp	/^		typedef uint64_t edge_t;$/;"	t	class:DGraphIntersection
+edges	old_files/convert/DGraphIntersection.hpp	/^		std::map<edge_t, flag_t> edges;$/;"	m	class:DGraphIntersection
+flag_t	old_files/convert/DGraphIntersection.hpp	/^		typedef uint8_t  flag_t;$/;"	t	class:DGraphIntersection
+g	old_files/applications/GreedyColoring.hpp	/^		Graph *g;$/;"	m	class:GreedyColoring
+getEdgeFlag	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::getEdgeFlag(edge_t e){$/;"	f	class:DGraphIntersection
+getHead	old_files/convert/AdjaList.hpp	/^		adjaNode *getHead(){ return head;}$/;"	f	class:AdjaList
+getIncrement	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::getIncrement(std::vector<edge_t>& inc, std::string graph_file_name){$/;"	f	class:DGraphIntersection
+getNewIntersection	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::getNewIntersection(std::string filename){$/;"	f	class:DGraphIntersection
+getNewIntersection	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::getNewIntersection(std::string filename, std::string logname){$/;"	f	class:DGraphIntersection
+getTail	old_files/convert/AdjaList.hpp	/^		adjaNode *getTail(){ return tail;}$/;"	f	class:AdjaList
+getVertexPair	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::getVertexPair(const edge_t e){$/;"	f	class:DGraphIntersection
+getVertexsNum	old_files/convert/Graph.hpp	/^		uint64_t getVertexsNum(){ return nList.size();}$/;"	f	class:Graph
+get_adj	impl/diGraph.cc	/^diGraph::get_adj(vid_t sour){$/;"	f	class:diGraph
+get_adj	impl/uGraph.cc	/^uGraph::get_adj(vid_t sour){$/;"	f	class:uGraph
+get_color_sum	old_files/applications/GreedyColoring.cc	/^GreedyColoring::get_color_sum(std::map<vertex_id_t, color_t> colors){$/;"	f	class:GreedyColoring
+get_first_avail_color	old_files/applications/GreedyColoring.cc	/^GreedyColoring::get_first_avail_color(vertex_id_t sour){$/;"	f	class:GreedyColoring
+graph_num	old_files/convert/DGraphIntersection.hpp	/^		uint32_t graph_num;$/;"	m	class:DGraphIntersection
+head	old_files/convert/AdjaList.hpp	/^		adjaNode *head;$/;"	m	class:AdjaList
+if_exist	basic/algorithms_types.hpp	/^	bool if_exist(vid_t v) const{$/;"	f	struct:tri_t
+initDGraphIntersectionByFile	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::initDGraphIntersectionByFile(std::string filename){$/;"	f	class:DGraphIntersection
+init_wp_seq	old_files/applications/GreedyColoring.cc	/^GreedyColoring::init_wp_seq(){$/;"	f	class:GreedyColoring
+main	old_files/convert/main.cc	/^main( int argc, const char** argv){$/;"	f
+main	unit_test/diGraph_test.cc	/^int main(int argc, char **argv){$/;"	f
+main	unit_test/tc_test.cc	/^main(int argc, char **argv){$/;"	f
+nList	old_files/convert/Graph.hpp	/^		std::vector<AdjaList> nList;$/;"	m	class:Graph
+next	old_files/convert/AdjaList.hpp	/^		adjaNode *next;$/;"	m	class:adjaNode
+num	old_files/convert/AdjaList.hpp	/^		size_t   num;$/;"	m	class:AdjaList
+operator <	basic/algorithms_types.hpp	/^operator<(const tri_t& lhs, const tri_t& rhs){$/;"	f
+operator ==	basic/algorithms_types.hpp	/^operator==(const tri_t& lhs, const tri_t& rhs){$/;"	f
+operator []	basic/algorithms_types.hpp	/^	const vid_t& operator[](const size_t index) const {$/;"	f	struct:tri_t
+operator []	basic/algorithms_types.hpp	/^	vid_t& operator[](const size_t index) {$/;"	f	struct:tri_t
+printEdges	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::printEdges(){$/;"	f	class:DGraphIntersection
+printVertex	old_files/applications/BFS.cc	/^printVertex(Graph::vertex_t v){$/;"	f
+read_graph_data	impl/diGraph.cc	/^diGraph::read_graph_data(char *file){$/;"	f	class:diGraph
+read_graph_data	impl/uGraph.cc	/^uGraph::read_graph_data(char *file){$/;"	f	class:uGraph
+refreshEdges	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::refreshEdges(){$/;"	f	class:DGraphIntersection
+refreshed	old_files/convert/DGraphIntersection.hpp	/^		flag_t refreshed;$/;"	m	class:DGraphIntersection
+run_wp	old_files/applications/GreedyColoring.cc	/^GreedyColoring::run_wp(){$/;"	f	class:GreedyColoring
+seq	old_files/applications/GreedyColoring.hpp	/^		std::vector<vertex_id_t> seq;$/;"	m	class:GreedyColoring
+size	old_files/convert/AdjaList.hpp	/^		size_t   size(){return num;}$/;"	f	class:AdjaList
+sort_seq	basic/algorithms_types.hpp	/^	void sort_seq(){$/;"	f	struct:tri_t
+storeVertex	old_files/applications/BFS.cc	/^storeVertex(Graph::vertex_t v){$/;"	f
+tail	old_files/convert/AdjaList.hpp	/^		adjaNode *tail;$/;"	m	class:AdjaList
+tc_for_ugraph	impl/triangle_listing.cc	/^tc_for_ugraph(std::set<tri_t> *res,uGraph* ug){$/;"	f
+tri_t	basic/algorithms_types.hpp	/^	tri_t(vid_t f, vid_t s, vid_t t){$/;"	f	struct:tri_t
+tri_t	basic/algorithms_types.hpp	/^struct tri_t{$/;"	s
+uGraph	basic/uGraph.hpp	/^		uGraph(){}$/;"	f	class:uGraph
+uGraph	basic/uGraph.hpp	/^		uGraph(char *file){read_graph_data(file);}$/;"	f	class:uGraph
+uGraph	basic/uGraph.hpp	/^class uGraph: public Graph{$/;"	c
+ug_t	basic/uGraph.hpp	/^typedef std::map<vid_t, adj_t> ug_t;$/;"	t
+usize_t	basic/types.hpp	/^typedef uint64_t usize_t; $/;"	t
+vertex_id_t	old_files/convert/AdjaList.hpp	/^typedef uint64_t vertex_id_t;$/;"	t
+vertex_t	old_files/convert/DGraphIntersection.hpp	/^		typedef uint32_t vertex_t;$/;"	t	class:DGraphIntersection
+vid_arr	basic/algorithms_types.hpp	/^		vid_t vid_arr[3];$/;"	m	struct:tri_t
+vid_t	basic/types.hpp	/^typedef uint32_t vid_t;$/;"	t
+visitFcn	old_files/applications/BFS.cc	/^typedef void (*visitFcn)(Graph::vertex_t);$/;"	t	file:
+vseq_t	old_files/applications/GreedyColoring.hpp	/^		typedef std::pair<vertex_id_t, color_t> vseq_t;$/;"	t	class:GreedyColoring
+vtx_set	impl/uGraph.cc	/^uGraph::vtx_set(std::set<vid_t>* vs){$/;"	f	class:uGraph
+vtx_sum	impl/diGraph.cc	/^diGraph::vtx_sum(){$/;"	f	class:diGraph
+vtx_sum	impl/uGraph.cc	/^uGraph::vtx_sum(){$/;"	f	class:uGraph
+wp_cmp_func	old_files/applications/GreedyColoring.cc	/^int wp_cmp_func(const vseq_t &x, const vseq_t &y){$/;"	f
+writeGroupIncrement	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::writeGroupIncrement(std::vector<std::string> files, std::string inc_file_name){$/;"	f	class:DGraphIntersection
+writeIncrement	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::writeIncrement(const std::vector<edge_t>& inc, std::string inc_name, uint32_t graph_num){$/;"	f	class:DGraphIntersection
+writeIntersection	old_files/convert/DGraphIntersection.hpp	/^DGraphIntersection::writeIntersection(std::string its_file_name) {$/;"	f	class:DGraphIntersection
