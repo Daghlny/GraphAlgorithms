@@ -15,18 +15,27 @@
 adj_t get_insct(adj_t *old, adj_t *ngbs);
 void print_adj(char *str, adj_t a);
 
+
+// this function uses Born-Kerbosch algorithm
+// The set @c represents the current clique, @cand is the candidates vertices
+// which can expend @c. @ncand has these vertices that have been finished.
+// @output_func is a function pointer that stores the results
+// @low_bound means cliques' size at least bigger than it.
+
 void
 clique_enum(
 			uGraph *g,
 			adj_t c, 
 		    adj_t cand, 
 			adj_t ncand,
-			void (*output_func)(adj_t *)){
+			void (*output_func)(adj_t *),
+			size_t low_bound){
 
 	
 
 	if(cand.size() == 0 && ncand.size() == 0){
-		output_func(&c);
+		if(c.size() >= low_bound)
+			output_func(&c);
 		return;
 	}
 	else
@@ -60,6 +69,10 @@ clique_enum(
 		
 }
 
+
+
+// compute two vertex sets' intersetion
+/
 adj_t
 get_insct(adj_t *old, adj_t *ngbs){
 	
@@ -72,6 +85,9 @@ get_insct(adj_t *old, adj_t *ngbs){
 	return res;
 }
 
+
+// there are two example functions as @output_func in clique_enum()
+//
 void
 clique_write_file(adj_t *res){
 
@@ -97,6 +113,8 @@ clique_output_screen(adj_t *res){
 		std::cout << *iter << ", ";
 	std::cout << std::endl;
 }
+// end examples
+
 
 // this section is used for debugging
 void
