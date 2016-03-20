@@ -7,8 +7,8 @@
 #include<fstream>
 #include<iostream>
 
-#ifndef clique_file_path
-#define clique_file_path "~/all_cliques.txt"
+#ifndef __clique_file_path
+#define __clique_file_path "~/all_cliques.txt"
 #endif
 
 
@@ -23,15 +23,12 @@ void print_adj(char *str, adj_t a);
 // @low_bound means cliques' size at least bigger than it.
 
 void
-clique_enum(
-			uGraph *g,
-			adj_t c, 
-		    adj_t cand, 
-			adj_t ncand,
-			void (*output_func)(adj_t *),
-			size_t low_bound){
-
-	
+clique_enum( uGraph *g,
+			 adj_t c, 
+		     adj_t cand, 
+			 adj_t ncand,
+			 void (*output_func)(adj_t *),
+			 size_t low_bound){
 
 	if(cand.size() == 0 && ncand.size() == 0){
 		if(c.size() >= low_bound)
@@ -55,11 +52,10 @@ clique_enum(
 			adj_t ngbs = g->get_adj(tmp);
 			c.insert(tmp);
 
-			clique_enum(g, 
-						c, 
+			clique_enum(g, c, 
 						get_insct(&cand, &ngbs), 
 						get_insct(&ncand, &ngbs), 
-						output_func);
+						output_func, low_bound);
 
 			//keep the origin set @c
 			c.erase(c.find(tmp)); 
@@ -72,7 +68,6 @@ clique_enum(
 
 
 // compute two vertex sets' intersetion
-/
 adj_t
 get_insct(adj_t *old, adj_t *ngbs){
 	
@@ -92,7 +87,7 @@ void
 clique_write_file(adj_t *res){
 
 	std::ofstream file;
-	file.open(clique_file_path);
+	file.open(__clique_file_path);
 	
 	for(adj_t::iterator iter = res->begin();
 		iter != res->end();
