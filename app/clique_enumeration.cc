@@ -38,11 +38,8 @@ clique_enum( uGraph *g,
 	else
 		while(!cand.empty()){
 			/*
-			std::cout << "******" << std::endl;
-			print_adj("C:", c);
-			print_adj("Cand:", cand);
-			print_adj("NCand:", ncand);
-			std::cout << "******" << std::endl;
+			 * this section used iterator v with for loop
+			 * but erase() will let v invalid in for loop's condition
 			*/
 			
 			adj_t::iterator v = cand.begin();
