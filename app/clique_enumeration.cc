@@ -12,8 +12,14 @@
 #endif
 
 
+// functions below is in program_process.cc file
+int          deal_parameters(size_t , char **);
+std::string  get_option_string(std::string);
+int          get_option_int(std::string);
+
+// functions below is in this file
 adj_t get_insct(adj_t *old, adj_t *ngbs);
-void print_adj(char *str, adj_t a);
+void  print_adj(char *str, adj_t a);
 
 
 // this function uses Born-Kerbosch algorithm

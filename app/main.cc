@@ -13,35 +13,59 @@ void clique_output_screen(adj_t *res);
 void clique_enum(uGraph *, adj_t, adj_t, adj_t, void(* )(adj_t*), size_t);
 
 
+// functions below is in program_process.cc file
+int          deal_parameters(size_t , char **);
+std::string  get_option_string(std::string);
+int          get_option_int(std::string);
+
 typedef std::map<std::string, std::string> paras_t;
 
+void
+output_help_msg(){
+	std::cout << std::endl;
+	std::cout << "This program is used to compute all maximal cliques in a un directed graph." << std::endl;
+	std::cout << "Author: Ritchie Lee" << std::endl;
+	std::cout << "The preprocess parameters are below: " << std::endl;
+	std::cout << "-L         the size's lower bound of cliques" << std::endl;
+	std::cout << "-input     the file path of graph data file"  << std::endl;
+	std::cout << "-output    the file to store all results computed by the program" << std::endl;
+	std::cout << std::endl;
+}
 
-
+// this main function is for clique_enumeration
 int
 main(int argc, char **argv){
 
-	if(argc <= 0){
-		std::cout << "parameters are wrong" << std::endl;
-		std::cout << "for help typing --help" << std::endl;
+	deal_parameters((size_t) argc, argv);
+
+	if(get_option_string("-help") != ""){
+		output_help_msg();
+		return 1;
+	}
+
+	std::string istr(get_option_string("input"));
+	if(istr == ""){
+		std::cout << "no available input data file" << std::endl;
 		return -1;
 	}
 
-	size_t lower_bound = 2;
-	if(argc == 3){
-		lower_bound = atoi(argv[1]);
+	int low_bound = get_option_int("L");
+	if(low_bound == -1){
+		std::cout << "*** *** *** ***" << std::endl;
+		std::cout << "the lower bound of the clique is 3 default" << std::endl;
+		std::cout << "*** *** *** ***" << std::endl;
+		low_bound = 3;
 	}
+
 	uGraph *g = NULL;
-	if(argc == 2)
-		g = new uGraph(argv[1]);
-	else
-		g = new uGraph(argv[2]);
+	g = new uGraph(istr.c_str());
 	//uGraph *g = new uGraph("./graph_data.txt");
 	
 	adj_t *cand = new adj_t();
 	g->vtx_set(cand);
 
 	adj_t c, ncand;
-	clique_enum(g, c, *cand, ncand, clique_output_screen, lower_bound);
+	clique_enum(g, c, *cand, ncand, clique_output_screen, low_bound);
 
 	return 1;
 }

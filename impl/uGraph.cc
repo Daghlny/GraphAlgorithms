@@ -11,7 +11,7 @@
 
 // init the graph object with a datafile in adjacency list format
 void
-uGraph::read_graph_data(char *file){
+uGraph::read_graph_data(const char *file){
 	std::ifstream in_f;
 	in_f.open(file);
 

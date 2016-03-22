@@ -19,9 +19,9 @@ typedef std::map<vid_t, adj_t> ug_t;
 class uGraph{
 	public:
 		uGraph(){}
-		uGraph(char *file){read_graph_data(file);}
+		uGraph(const char *file){read_graph_data(file);}
 
-		void  read_graph_data(char *file);
+		void  read_graph_data(const char *file);
 
 		usize_t           adj_size(vid_t sour);
 		const adj_t&      get_adj(vid_t sour) ;
