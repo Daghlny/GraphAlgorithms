@@ -11,7 +11,7 @@
 
 //#include"Graph.hpp"
 
-typedef std::map<vid_t, adj_t> ug_t;
+typedef std::map<vid_t, vlist> ug_t;
 
 // the objects of this class represent a undirected graph
 // the class supply some basic operations
@@ -24,7 +24,8 @@ class uGraph{
 		void  read_graph_data(const char *file);
 
 		usize_t           adj_size(vid_t sour);
-		const adj_t&      get_adj(vid_t sour) ;
+		const vlist&      get_adj (vid_t sour);
+        vlist *           adjlist (vid_t v);
 		usize_t           vtx_sum();
 		void              vtx_set(std::set<vid_t>* vs);
 		

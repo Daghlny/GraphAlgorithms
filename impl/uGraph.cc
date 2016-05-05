@@ -24,7 +24,7 @@ uGraph::read_graph_data(const char *file){
 		if(!isdigit(buff[0]))
 			break;
 		std::string line(buff);
-		std::string::size_type tab_pos = line.find_first_of('\t', 0);
+		std::string::size_type tab_pos = line.find_first_of(' ', 0);
 		vid_t sour = atoi(line.substr(0, tab_pos).c_str());
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 
@@ -40,7 +40,7 @@ uGraph::add_edg(vid_t sour, vid_t dest){
 	ug_t::iterator iter = data.find(sour);
 	if(iter == data.end()){
 		
-		std::pair<vid_t, adj_t> new_item = std::make_pair(sour, adj_t());
+		std::pair<vid_t, vlist> new_item = std::make_pair(sour, vlist());
 		data.insert(new_item);
 	}
 	(data[sour]).insert(dest);
@@ -53,7 +53,7 @@ uGraph::adj_size(vid_t sour){
 }
 
 // return the adjacency list of certain vertex
-const adj_t& 
+const vlist& 
 uGraph::get_adj(vid_t sour){
 	return data[sour];
 }
@@ -62,6 +62,12 @@ uGraph::get_adj(vid_t sour){
 usize_t
 uGraph::vtx_sum(){
 	return data.size();
+}
+
+// return whole adjcency list with pointer
+vlist*
+uGraph::adjlist( vid_t v ){
+    return &data[v];
 }
 
 void

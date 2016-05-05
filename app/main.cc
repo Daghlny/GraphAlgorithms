@@ -5,7 +5,7 @@
 #include<algorithm>
 #include<iostream>
 #include<cstdlib>
-
+#include <ctime>
 
 // the functions below are in clique_enumeration.cc
 void clique_write_file(adj_t *res);
@@ -44,6 +44,7 @@ main(int argc, char **argv){
 	}
 
 	std::string istr(get_option_string("input"));
+    std::cout << istr << std::endl;
 	if(istr == ""){
 		std::cout << "no available input data file" << std::endl;
 		return -1;
@@ -58,14 +59,28 @@ main(int argc, char **argv){
 	}
 
 	uGraph *g = NULL;
+
+    clock_t all_begin = clock();
+    clock_t io_begin  = clock();
 	g = new uGraph(istr.c_str());
+    clock_t io_end    = clock();
+
+    std::cout << "read graph data finished." << std::endl;
+    std::cout << (double)((io_begin-io_end)/CLOCKS_PER_SEC);
+    std::cout << " seconds used" << std::endl;
 	//uGraph *g = new uGraph("./graph_data.txt");
 	
 	adj_t *cand = new adj_t();
 	g->vtx_set(cand);
 
 	adj_t c, ncand;
+    
 	clique_enum(g, c, *cand, ncand, clique_output_screen, low_bound);
+    clock_t all_end = clock();
+    std::cout << "all computing is finished." << std::endl;
+    std::cout << (double)((all_begin-all_end)/CLOCKS_PER_SEC);
+    std::cout << " seconds used" << std::endl;
+    std::cout << std::endl;
 
 	return 1;
 }
