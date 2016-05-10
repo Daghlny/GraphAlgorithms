@@ -8,17 +8,15 @@
 #include <iostream>
 
 
+void     print_vlist(vlist *v);
 // type definitions
 
 // @task_t represents a indenpendent task to compute cliques from @cand
 // @flag is the biggest index of vertices having visited
 struct task_t{
 
-    task_t( vlist *x_cand, 
-            vlist *x_c,
-            vid_t x_flag,
-            task_t *x_pre = NULL, 
-            task_t *x_next = NULL): 
+    task_t( vlist *x_cand, vlist *x_c, vid_t x_flag,
+            task_t *x_pre = NULL, task_t *x_next = NULL): 
         cand(x_cand), c(x_c), flag(x_flag), pre(x_pre), next(x_next){}
 
     vlist   *cand;
@@ -30,29 +28,54 @@ struct task_t{
 
 struct tasklist {
 
-    tasklist(task_t *h, task_t *t): head(h), tail(t) {}
+    tasklist(task_t *h, task_t *t): head(h), tail(t), len(0){}
 
     void remove_tail(){
+        
+        --len;
+        /*
+        std::cout << "Cand: ";
+        print_vlist(tail->cand);
+        std::cout << std::endl;
+        */
 
-        if(tail == NULL)
-            return;
-        tail->pre->next = NULL;
-        tail = tail->pre;
+        if(tail == NULL && head == NULL){
+            return ;
+        } else if(tail != NULL && head != NULL && tail != head){
+            tail->pre->next = NULL;
+            tail = tail->pre;
+        } else if(tail != NULL && head != NULL && tail == head){
+            head = NULL;
+            tail = NULL;
+        } else {
+            std::cout << "Remove Error" << std::endl;
+        }
+
     }
 
     void insert_tail( task_t *tmp ){
+        
+        ++len;
 
-        if( head == NULL )
-            head = tmp; 
-
-        tmp->pre  = tail;
-        tail = tmp;
-        tmp->next = NULL;
+        if( head == NULL && tail == NULL ){
+            head = tmp;
+            tail = tmp;
+            tmp->pre = NULL;
+            tmp->next = NULL;
+        } else if(head != NULL && tail != NULL){
+            tmp->pre = tail;
+            tail->next = tmp;
+            tail = tmp;
+            tmp->next = NULL;
+        } else {
+            std::cout << "Error: " << std::endl;
+        }
 
     }
 
     task_t *head;
     task_t *tail;
+    size_t len;
 };
 
 // some tools to deal with parameters of program
@@ -118,15 +141,18 @@ do_task( task_t   *t,
          uGraph   *g,
          void    (*output_func)(vlist *) ){
     
+    /* this section just for debugging
+     *
+    std::cout << " *** begin *** " << std::endl;
+    print_vlist(t->c);
+    print_vlist(t->cand);
+    std::cout << " *** end *** " << std::endl;
+    */
+
     if( t->cand->size() == 0 ){
+        //std::cout << "hehe" << std::endl;
         output_func(t->c);
         return ;
-    }
-
-    for( vlist::const_iterator iter = t->cand->begin();
-         iter != t->cand->end(); 
-         ++iter ){
-    
     }
 
     for( vlist::const_iterator iter = t->cand->begin();
@@ -139,7 +165,9 @@ do_task( task_t   *t,
             continue;
 
         vlist *adjl = g->adjlist(*iter);
-        vlist *candidate = get_intsct(adjl, t->c);
+        //vlist *candidate = get_intsct(adjl, t->c);
+        vlist *candidate = get_intsct(adjl, t->cand);
+        //std::cout << "Size: " << candidate->size() << std::endl;
         if(candidate->size() != 0){
             vlist  *newc = set_insert_copy(t->c, *iter);
             task_t *tmp  = new task_t(candidate, newc, *iter);
@@ -169,11 +197,24 @@ get_intsct(vlist *v1, vlist *v2){
     return res;
 }
 
+/*
+vlist*
+get_intsct(vlist *v1, vlist *v2){
+    
+    vlist *res = new vlist();
+    vlist *lo  = v1->size() > v2->size() ? v2 : v1;
+    vlist *ch  = lo == v1 ? v2 : v1;
+
+    for( vlist::const_iterator iter = lo->begin();
+         iter != lo->end();
+         ++iter)
+        if( e )
+}
+*/
 
 void
 release_task(task_t *t){
    
-    std::cout << " begin release " << std::endl;
     delete t->cand;
     delete t->c;
     delete t;
@@ -203,7 +244,7 @@ print_vlist(vlist *v){
     for(vlist::iterator iter = v->begin();
         iter != v->end();
         ++iter )
-        std::cout << '\t' << *iter;
+        std::cout << *iter << " , ";
     std::cout << std::endl;
 }
 
