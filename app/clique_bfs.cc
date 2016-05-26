@@ -73,6 +73,24 @@ struct tasklist {
 
     }
 
+    void remove_head() {
+
+        --len
+        
+        if(tail == NULL && head == NULL){
+            return ;
+        } else if (tail != NULL && head != NULL && tail != head) {
+            head->next->pre = NULL;
+            head = head->next;
+        } else if (tail != NULL && head != NULL && tail == head) {
+            head = NULL;
+            tail = NULL;
+        } else {
+            std::cout << "Remove queue's head Error" << std::endl;
+            exit(0);
+        }
+    }
+
     task_t *head;
     task_t *tail;
     size_t len;
@@ -126,10 +144,11 @@ clique_compute( uGraph *g,
     }
 
     // main loop, keep process the tasks linkedlist until no tasks remain
-    while( tasks.tail != NULL ){
+    while( tasks.head != NULL ){
         
-        task_t *new_task = tasks.tail;
-        tasks.remove_tail();
+        std::cout << "remaining tasks: " << task.len << std::endl;
+        task_t *new_task = tasks.head;
+        tasks.remove_head();
         do_task( new_task, tasks, g, output_func );
     }
 }
@@ -240,11 +259,21 @@ set_insert_copy( vid_t v ){
 void
 print_vlist(vlist *v){
    
-    std::cout << "clique: ";
     for(vlist::iterator iter = v->begin();
         iter != v->end();
         ++iter )
-        std::cout << *iter << " , ";
+        std::cout << *iter << ' ';
+    std::cout << std::endl;
+}
+
+std::ofstream cfile;
+void
+write_vlist(vlist *v){
+    
+    for(vlist::iterator iter = v->begin();
+        iter != v->end();
+        ++iter) 
+        cfile << *iter << ' ';
     std::cout << std::endl;
 }
 
@@ -252,6 +281,10 @@ int
 main(int argc, char **argv){
    
     uGraph *g = new uGraph(argv[1]);
-    clique_compute(g, print_vlist);
+    cfile.open("./cliques.data");
+    clique_compute(g, write_vlist);
+    cfile.close();
+
+    return 0;
 }
 
