@@ -7,8 +7,14 @@
 #include <fstream>
 #include <iostream>
 
+// Global Vals
+
+uint64_t clique_num;
+uint64_t max_clique_size;
+std::ofstream cfile;
 
 void     print_vlist(vlist *v);
+
 // type definitions
 
 // @task_t represents a indenpendent task to compute cliques from @cand
@@ -75,7 +81,7 @@ struct tasklist {
 
     void remove_head() {
 
-        --len
+        --len;
         
         if(tail == NULL && head == NULL){
             return ;
@@ -143,10 +149,12 @@ clique_compute( uGraph *g,
         tasks.insert_tail(tmp);
     }
 
+    clique_num = 0;
+    max_clique_size = 0;
     // main loop, keep process the tasks linkedlist until no tasks remain
     while( tasks.head != NULL ){
         
-        std::cout << "remaining tasks: " << task.len << std::endl;
+        std::cout << "remaining tasks: " << tasks.len << std::endl;
         task_t *new_task = tasks.head;
         tasks.remove_head();
         do_task( new_task, tasks, g, output_func );
@@ -170,7 +178,10 @@ do_task( task_t   *t,
 
     if( t->cand->size() == 0 ){
         //std::cout << "hehe" << std::endl;
+        clique_num++;
         output_func(t->c);
+        max_clique_size = std::max(max_clique_size, t->c->size());
+        release_task(t);
         return ;
     }
 
@@ -192,7 +203,11 @@ do_task( task_t   *t,
             task_t *tmp  = new task_t(candidate, newc, *iter);
             tasks.insert_tail(tmp);
         } else {
-            output_func( set_insert_copy(t->c, *iter) );
+            vlist *res = set_insert_copy(t->c, *iter);
+            max_clique_size = std::max(max_clique_size, t->c->size()+1);
+            output_func( res );
+            clique_num++;
+            delete res;
         }
 
     }
@@ -266,7 +281,6 @@ print_vlist(vlist *v){
     std::cout << std::endl;
 }
 
-std::ofstream cfile;
 void
 write_vlist(vlist *v){
     
@@ -284,6 +298,9 @@ main(int argc, char **argv){
     cfile.open("./cliques.data");
     clique_compute(g, write_vlist);
     cfile.close();
+
+    std::cout << "Total Clique Numbers: " << clique_num << std::endl;
+    std::cout << "Maximum size of cliques: " << max_clique_size << std::endl;
 
     return 0;
 }
