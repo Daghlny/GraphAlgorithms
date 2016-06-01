@@ -288,14 +288,16 @@ write_vlist(vlist *v){
         iter != v->end();
         ++iter) 
         cfile << *iter << ' ';
-    std::cout << std::endl;
+    cfile << std::endl;
 }
 
 int
 main(int argc, char **argv){
    
     uGraph *g = new uGraph(argv[1]);
-    cfile.open("./cliques.data");
+    std::string filepath(argv[1]);
+    filepath += ".bfs.clique";
+    cfile.open(filepath.c_str());
     clique_compute(g, write_vlist);
     cfile.close();
 
