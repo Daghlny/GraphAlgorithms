@@ -1,0 +1,2 @@
+clique_multiThreads.out: ./clique_multiThread_bfs.cc ../impl/uGraph.cc
+	g++ -std=c++0x -pthread -I ../basic/ ./clique_multiThread_bfs.cc ../impl/uGraph.cc -o clique_multiThreads.out
