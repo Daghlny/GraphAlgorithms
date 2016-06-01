@@ -11,6 +11,8 @@
 #define __clique_file_path "~/all_cliques.txt"
 #endif
 
+uint64_t max_clique_size;
+uint64_t clique_num;
 
 // functions below is in program_process.cc file
 int          deal_parameters(size_t , char **);
@@ -37,8 +39,11 @@ clique_enum( uGraph *g,
 			 size_t low_bound){
 
 	if(cand.size() == 0 && ncand.size() == 0){
-		if(c.size() >= low_bound)
+		if(c.size() >= low_bound){
+            clique_num++;
+            max_clique_size = std::max(max_clique_size, c.size());
 			output_func(&c);
+        }
 		return;
 	}
 	else
@@ -85,20 +90,18 @@ get_insct(adj_t *old, adj_t *ngbs){
 
 
 // there are two example functions as @output_func in clique_enum()
-//
+
+std::ofstream file;
 void
 clique_write_file(adj_t *res){
 
-	std::ofstream file;
-	file.open(__clique_file_path);
 	
 	for(adj_t::iterator iter = res->begin();
 		iter != res->end();
 		++iter)
-		file << *iter << ", ";
+		file << *iter << " ";
 	file << std::endl;
 
-	file.close();
 }
 
 void
@@ -128,17 +131,42 @@ print_adj(char *str, adj_t a){
 }
 
 // end section
-//
 #ifndef __USER__DEFINED__MAIN
 #define __USER__DEFINED__MAIN
 
-/*
 int
-main(int argc, char **argv){
-	
-	if(argc == 1)
+main(int argc, char **argv) {
+    
+    if( argc < 2 && argc > 3 ){
+        std::cout << "Parameters wrong" << std::endl;
+        return -1;
+    }
+
+    uGraph *g = new uGraph(argv[1]);
+
+    std::string t_file_path(argv[1]);
+    t_file_path += ".clique.data";
+    if( argc == 2 )
+        file.open(t_file_path.c_str());
+    else
+        file.open(argv[2]);
+
+    max_clique_size = 0;
+    clique_num      = 0;
+
+    adj_t *cand = new adj_t();
+    g->vtx_set(cand);
+    adj_t c, ncand;
+
+    clique_enum(g, c, *cand, ncand, clique_write_file, 1);
+
+    file.close();
+
+    std::cout << "Total cliques' number: " << clique_num << std::endl;
+    std::cout << "Maximum clique's size: " << max_clique_size << std::endl;
+    
+    return 0;
 }
-*/
 
 #endif
 

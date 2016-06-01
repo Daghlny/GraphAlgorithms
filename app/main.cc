@@ -68,7 +68,6 @@ main(int argc, char **argv){
     std::cout << "read graph data finished." << std::endl;
     std::cout << (double)((io_begin-io_end)/CLOCKS_PER_SEC);
     std::cout << " seconds used" << std::endl;
-	//uGraph *g = new uGraph("./graph_data.txt");
 	
 	adj_t *cand = new adj_t();
 	g->vtx_set(cand);
@@ -85,24 +84,4 @@ main(int argc, char **argv){
 	return 1;
 }
 
-/*
-paras_t*
-trans_paras(int argc, char **argv){
-
-	paras_t *p = new paras_t();
-
-	if(argc % 2 != 0)
-	size_t pos = 0;
-	while(pos <= argc-1){
-		std::string key(argv[pos]);
-		std::string value(argv[pos+1]);
-		
-		p->insert(std::make_pair(key, value));
-		pos += 2;
-	}
-
-	return p;
-	
-}
-*/
 
