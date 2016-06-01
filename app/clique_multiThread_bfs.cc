@@ -182,7 +182,7 @@ clique_compute( uGraph *g,
     }
 
     while(true){
-        if( t_count->cnt == thread_num ){
+        if( t_count->cnt == thread_num && tasks.head == NULL ){
             std::cout << "All works have been done" << std::endl;
             break;
         }
