@@ -14,6 +14,7 @@
 uint64_t clique_num;
 uint64_t max_clique_size;
 std::ofstream cfile;
+pthread_mutex_t *f_lock;
 
 void     print_vlist(vlist *v);
 
@@ -335,12 +336,15 @@ print_vlist(vlist *v){
 
 void
 write_vlist(vlist *v){
+
+    pthread_mutex_lock(f_lock);
     
     for(vlist::iterator iter = v->begin();
         iter != v->end();
         ++iter) 
         cfile << *iter << ' ';
     cfile << std::endl;
+    pthread_mutex_unlock(f_lock);
 }
 
 int
@@ -356,6 +360,9 @@ main(int argc, char **argv){
     std::string filepath(argv[1]);
     filepath += ".bfs.multithreads.clique";
     cfile.open(filepath.c_str());
+
+    f_lock = (pthread_mutex_t *)(malloc(sizeof(pthread_mutex_t)));
+    pthread_mutex_init(f_lock, NULL);
 
     int thread_num = atoi(argv[2]);
 
