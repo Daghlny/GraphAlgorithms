@@ -73,7 +73,9 @@ struct tasklist {
         if(tail == NULL && head == NULL){
             return ;
         } else if (tail != NULL && head != NULL && tail != head) {
+            if( head->next == NULL ) std::cout << "head->next == NULL " << std::endl;
             head->next->pre = NULL;
+            if( head->next == NULL )std::cout << "end" << std::endl;
             head = head->next;
         } else if (tail != NULL && head != NULL && tail == head) {
             head = NULL;
@@ -254,13 +256,16 @@ do_task( task_t   *t,
         if(candidate->size() != 0){
             vlist  *newc = set_insert_copy(t->c, *iter);
             task_t *tmp  = new task_t(candidate, newc, *iter);
+
             pthread_mutex_lock(&tasks->t_lock);
             tasks->insert_tail(tmp);
             pthread_mutex_unlock(&tasks->t_lock);
+
         } else {
             vlist *res = set_insert_copy(t->c, *iter);
-            output_func( res );
+            output_func(res);
             delete res;
+            delete candidate;
         }
 
     }

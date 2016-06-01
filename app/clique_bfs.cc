@@ -195,9 +195,8 @@ do_task( task_t   *t,
             continue;
 
         vlist *adjl = g->adjlist(*iter);
-        //vlist *candidate = get_intsct(adjl, t->c);
         vlist *candidate = get_intsct(adjl, t->cand);
-        //std::cout << "Size: " << candidate->size() << std::endl;
+
         if(candidate->size() != 0){
             vlist  *newc = set_insert_copy(t->c, *iter);
             task_t *tmp  = new task_t(candidate, newc, *iter);
@@ -208,6 +207,7 @@ do_task( task_t   *t,
             output_func( res );
             clique_num++;
             delete res;
+            delete candidate;
         }
 
     }
