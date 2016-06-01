@@ -185,8 +185,12 @@ clique_compute( uGraph *g,
     }
 
     while(true){
-        if( t_count->cnt == thread_num && tasks.head == NULL ){
+        if( t_count->cnt == 0 && tasks.head == NULL ){
             std::cout << "All works have been done" << std::endl;
+            /* cancal all worker threads */
+            for(int i = 0; i != thread_num; ++i) {
+                if(pthread_cancel(*(threads[i])) != 0) i--;
+            }
             break;
         }
     } 
@@ -205,25 +209,25 @@ thread_compute_clique(void *thread_info_ptr){
 
     while(true){
 
-        pthread_mutex_lock(&tbc->lock);
-        tbc->cnt++;
-        pthread_mutex_unlock(&tbc->lock);
-
         pthread_mutex_lock(&tasks->h_lock);
         while( tasks->head == NULL );
         pthread_mutex_lock(&tasks->t_lock);
 
-        pthread_mutex_lock(&tbc->lock);
-        tbc->cnt--;
-        pthread_mutex_unlock(&tbc->lock);
-
         task_t *t = tasks->head;
         tasks->remove_head();
+
+        pthread_mutex_lock(&tbc->lock);
+        tbc->cnt++;
+        pthread_mutex_unlock(&tbc->lock);
 
         pthread_mutex_unlock(&tasks->t_lock);
         pthread_mutex_unlock(&tasks->h_lock);
 
         do_task(t, tasks, g, tt->output);
+
+        pthread_mutex_lock(&tbc->lock);
+        tbc->cnt--;
+        pthread_mutex_unlock(&tbc->lock);
     }
     
     return NULL;
@@ -315,6 +319,8 @@ release_task(task_t *t){
 vlist*
 set_insert_copy( vlist* vl, vid_t v){
     
+    if(vl == NULL)
+        std::cout << "vl is null" << std::endl;
     vlist *res = new vlist(*vl);
     res->insert(v);
     return res;
