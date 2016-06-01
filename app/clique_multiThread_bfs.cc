@@ -185,6 +185,7 @@ clique_compute( uGraph *g,
     }
 
     while(true){
+        //if( t_count->cnt == 0 ) std::cout << "cnt == 0" << std::endl;
         if( t_count->cnt == 0 && tasks.head == NULL ){
             std::cout << "All works have been done" << std::endl;
             /* cancal all worker threads */
@@ -209,9 +210,15 @@ thread_compute_clique(void *thread_info_ptr){
 
     while(true){
 
+        std::cout << (unsigned long)pthread_self() << " Waiting" << std::endl;
+        std::cout << (unsigned long)tasks->len     << std::endl;
+
         pthread_mutex_lock(&tasks->h_lock);
+        std::cout << (unsigned long)pthread_self() << "Have h_lock" << std::endl;
         while( tasks->head == NULL );
         pthread_mutex_lock(&tasks->t_lock);
+
+        std::cout << (unsigned long)pthread_self() << " Have t_lock" << std::endl;
 
         task_t *t = tasks->head;
         tasks->remove_head();
