@@ -6,12 +6,15 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <pthread.h>
+#include <stdlib.h>
 
 // Global Vals
 
 uint64_t clique_num;
 uint64_t max_clique_size;
 std::ofstream cfile;
+pthread_mutex_t *f_lock;
 
 void     print_vlist(vlist *v);
 
@@ -34,29 +37,13 @@ struct task_t{
 
 struct tasklist {
 
-    tasklist(task_t *h, task_t *t): head(h), tail(t), len(0){}
-
-    void remove_tail(){
-        
-        --len;
-        /*
-        std::cout << "Cand: ";
-        print_vlist(tail->cand);
-        std::cout << std::endl;
-        */
-
-        if(tail == NULL && head == NULL){
-            return ;
-        } else if(tail != NULL && head != NULL && tail != head){
-            tail->pre->next = NULL;
-            tail = tail->pre;
-        } else if(tail != NULL && head != NULL && tail == head){
-            head = NULL;
-            tail = NULL;
-        } else {
-            std::cout << "Remove Error" << std::endl;
+    tasklist(task_t *h, task_t *t): head(h), tail(t), len(0){
+        //t_lock = (pthread_mutex_t)(malloc(sizeof(pthread_mutex_t)));
+        if( pthread_mutex_init(&t_lock, NULL) != 0 && 
+            pthread_mutex_init(&h_lock, NULL) != 0 ) {
+            std::cout << "The Pthread Lock in Tasklist is Wrong" << std::endl;
+            exit(0);
         }
-
     }
 
     void insert_tail( task_t *tmp ){
@@ -86,7 +73,9 @@ struct tasklist {
         if(tail == NULL && head == NULL){
             return ;
         } else if (tail != NULL && head != NULL && tail != head) {
+            if( head->next == NULL ) std::cout << "head->next == NULL " << std::endl;
             head->next->pre = NULL;
+            if( head->next == NULL )std::cout << "end" << std::endl;
             head = head->next;
         } else if (tail != NULL && head != NULL && tail == head) {
             head = NULL;
@@ -99,7 +88,33 @@ struct tasklist {
 
     task_t *head;
     task_t *tail;
+    pthread_mutex_t h_lock;
+    pthread_mutex_t t_lock;
     size_t len;
+};
+
+struct thread_busy_count {
+    
+    thread_busy_count(){
+        cnt = 0;
+        pthread_mutex_init(&lock, NULL);
+    }
+    size_t cnt;
+    pthread_mutex_t lock;
+};
+
+struct thread_task {
+
+    thread_task( uGraph* xg, 
+                 tasklist *xtl, 
+                 thread_busy_count *xtc, 
+                 void (*xoutput)(vlist*)):
+        g(xg), tl(xtl), tbc(xtc), output(xoutput){}
+
+    uGraph *g;
+    tasklist *tl;
+    thread_busy_count *tbc;
+    void (*output)(vlist *);
 };
 
 // some tools to deal with parameters of program
@@ -109,9 +124,11 @@ int         get_option_int(std::string);
 
 
 void        do_task( task_t   *t, 
-                     tasklist &tasks, 
+                     tasklist *tasks, 
                      uGraph   *g,
                      void    (*output_func)(vlist *));
+
+void*       thread_compute_clique( void *thread_info_ptr );
 
 // return a new vlist that is the intersection of @v1 and @v2
 vlist*   get_intsct(vlist *v1, vlist *v2);
@@ -129,11 +146,12 @@ void     print_vlist(vlist *v);
 
 // compute all maximal cliques with BFS method
 // it means all cliques of size k is generated from size k-1
-//
+
 // all kinds of implementation of @output_func should delete the memory of vlist
 void
 clique_compute( uGraph *g,
-                void (*output_func)(vlist *)){
+                void (*output_func)(vlist *),
+                int  thread_num){
     
     vlist *allvtx = new vlist();
     g->vtx_set(allvtx);
@@ -149,38 +167,89 @@ clique_compute( uGraph *g,
         tasks.insert_tail(tmp);
     }
 
-    clique_num = 0;
-    max_clique_size = 0;
-    // main loop, keep process the tasks linkedlist until no tasks remain
-    while( tasks.head != NULL ){
-        
-        std::cout << "remaining tasks: " << tasks.len << std::endl;
-        task_t *new_task = tasks.head;
-        tasks.remove_head();
-        do_task( new_task, tasks, g, output_func );
+    // Create @thread_num Threads to Compute Maximal Cliques
+
+    thread_busy_count *t_count = new thread_busy_count();
+    pthread_t **threads = (pthread_t **)(malloc(sizeof(pthread_t *) * thread_num));
+
+    for(int i = 0; i != thread_num; ++i){
+        thread_task *thread_info_ptr = new thread_task(g, &tasks, t_count, output_func);
+        threads[i] = (pthread_t *)(malloc(sizeof(pthread_t)));
+        if((pthread_create( threads[i], 
+                            NULL, 
+                            thread_compute_clique, 
+                            (void*)thread_info_ptr ) ) != 0 ) {
+            std::cout << "Thread Creating has wrong" << std::endl;
+            i--;
+        }
     }
+
+    while(true){
+        //if( t_count->cnt == 0 ) std::cout << "cnt == 0" << std::endl;
+        if( t_count->cnt == 0 && tasks.head == NULL ){
+            std::cout << "All works have been done" << std::endl;
+            /* cancal all worker threads */
+            for(int i = 0; i != thread_num; ++i) {
+                if(pthread_cancel(*(threads[i])) != 0) i--;
+            }
+            break;
+        }
+    } 
+
+    return ;
 }
+
+
+void*
+thread_compute_clique(void *thread_info_ptr){
+
+    thread_task *tt = (thread_task *)(thread_info_ptr);
+    tasklist *tasks = (tasklist *)(tt->tl);
+    uGraph   *g     = (uGraph *)(tt->g);
+    thread_busy_count *tbc = (thread_busy_count *)(tt->tbc);
+
+    while(true){
+
+        std::cout << (unsigned long)pthread_self() << " Waiting" << std::endl;
+        std::cout << (unsigned long)tasks->len     << std::endl;
+
+        pthread_mutex_lock(&tasks->h_lock);
+        std::cout << (unsigned long)pthread_self() << "Have h_lock" << std::endl;
+        while( tasks->head == NULL );
+        pthread_mutex_lock(&tasks->t_lock);
+
+        std::cout << (unsigned long)pthread_self() << " Have t_lock" << std::endl;
+
+        task_t *t = tasks->head;
+        tasks->remove_head();
+
+        pthread_mutex_lock(&tbc->lock);
+        tbc->cnt++;
+        pthread_mutex_unlock(&tbc->lock);
+
+        pthread_mutex_unlock(&tasks->t_lock);
+        pthread_mutex_unlock(&tasks->h_lock);
+
+        do_task(t, tasks, g, tt->output);
+
+        pthread_mutex_lock(&tbc->lock);
+        tbc->cnt--;
+        pthread_mutex_unlock(&tbc->lock);
+    }
+    
+    return NULL;
+}
+
 
 // finish one task
 void
 do_task( task_t   *t,
-         tasklist &tasks,
+         tasklist *tasks,
          uGraph   *g,
          void    (*output_func)(vlist *) ){
     
-    /* this section just for debugging
-     *
-    std::cout << " *** begin *** " << std::endl;
-    print_vlist(t->c);
-    print_vlist(t->cand);
-    std::cout << " *** end *** " << std::endl;
-    */
-
     if( t->cand->size() == 0 ){
-        //std::cout << "hehe" << std::endl;
-        clique_num++;
         output_func(t->c);
-        max_clique_size = std::max(max_clique_size, t->c->size());
         release_task(t);
         return ;
     }
@@ -189,8 +258,6 @@ do_task( task_t   *t,
          iter != t->cand->end();
          ++iter ){
 
-        //std::cout << t->flag << '\t' << *iter << std::endl;
-        
         if( *iter < t->flag )
             continue;
 
@@ -200,12 +267,14 @@ do_task( task_t   *t,
         if(candidate->size() != 0){
             vlist  *newc = set_insert_copy(t->c, *iter);
             task_t *tmp  = new task_t(candidate, newc, *iter);
-            tasks.insert_tail(tmp);
+
+            pthread_mutex_lock(&tasks->t_lock);
+            tasks->insert_tail(tmp);
+            pthread_mutex_unlock(&tasks->t_lock);
+
         } else {
             vlist *res = set_insert_copy(t->c, *iter);
-            max_clique_size = std::max(max_clique_size, t->c->size()+1);
-            output_func( res );
-            clique_num++;
+            output_func(res);
             delete res;
             delete candidate;
         }
@@ -257,6 +326,8 @@ release_task(task_t *t){
 vlist*
 set_insert_copy( vlist* vl, vid_t v){
     
+    if(vl == NULL)
+        std::cout << "vl is null" << std::endl;
     vlist *res = new vlist(*vl);
     res->insert(v);
     return res;
@@ -283,26 +354,42 @@ print_vlist(vlist *v){
 
 void
 write_vlist(vlist *v){
+
+    pthread_mutex_lock(f_lock);
     
     for(vlist::iterator iter = v->begin();
         iter != v->end();
         ++iter) 
         cfile << *iter << ' ';
     cfile << std::endl;
+    pthread_mutex_unlock(f_lock);
 }
 
 int
 main(int argc, char **argv){
    
+    if( argc ==  0) {
+        std::cout << "The Program needs two parameters." << std::endl;
+        std::cout << "1 - The input Graph File" << std::endl;
+        std::cout << "2 - The Thread's Number" << std::endl;
+        return 0;
+    }
     uGraph *g = new uGraph(argv[1]);
     std::string filepath(argv[1]);
-    filepath += ".bfs.clique";
+    filepath += ".bfs.multithreads.clique";
     cfile.open(filepath.c_str());
-    clique_compute(g, write_vlist);
+
+    f_lock = (pthread_mutex_t *)(malloc(sizeof(pthread_mutex_t)));
+    pthread_mutex_init(f_lock, NULL);
+
+    int thread_num = atoi(argv[2]);
+
+    clique_compute(g, write_vlist, thread_num);
+
     cfile.close();
 
-    std::cout << "Total Clique Numbers: " << clique_num << std::endl;
-    std::cout << "Maximum size of cliques: " << max_clique_size << std::endl;
+    //std::cout << "Total Clique Numbers: " << clique_num << std::endl;
+    //std::cout << "Maximum size of cliques: " << max_clique_size << std::endl;
 
     return 0;
 }

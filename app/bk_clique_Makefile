@@ -1,0 +1,2 @@
+clique_enum.out: clique_enumeration.cc ../impl/uGraph.cc
+	g++ -std=c++0x -I ../basic/ ./clique_enumeration.cc ../impl/uGraph.cc -o ./clique_enum.out

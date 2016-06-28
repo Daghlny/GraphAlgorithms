@@ -1,3 +1,0 @@
-
-clique_bfs.out: ./clique_bfs.cc ../impl/uGraph.cc
-    g++ -std=c++11 -I ../basic/ ./clique_bfs.cc ../impl/uGraph.cc -o clique_bfs.out
