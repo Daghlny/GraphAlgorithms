@@ -24,7 +24,7 @@ uGraph::read_graph_data(const char *file){
 		if(!isdigit(buff[0]))
 			break;
 		std::string line(buff);
-		std::string::size_type tab_pos = line.find_first_of('\t', 0);
+		std::string::size_type tab_pos = line.find_first_of(' ', 0);
 		vid_t sour = atoi(line.substr(0, tab_pos).c_str());
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 
@@ -48,7 +48,7 @@ uGraph::add_edg(vid_t sour, vid_t dest){
 
 // return the adjacency list's size of certain vertex
 usize_t 
-uGraph::adj_size(vid_t sour){
+uGraph::adj_size(vid_t sour) const {
 	return (data[sour]).size();
 }
 
@@ -60,22 +60,46 @@ uGraph::get_adj(vid_t sour){
 
 // return the size of vertices' set
 usize_t
-uGraph::vtx_sum(){
+uGraph::vtx_sum() const{
 	return data.size();
 }
 
 // return whole adjcency list with pointer
 vlist*
-uGraph::adjlist( vid_t v ){
-    return &data[v];
+uGraph::adjlist_ptr( vid_t v ){
+    if( data.find(v) != data.end() )
+        return &data[v];
+    else
+        return NULL;
 }
 
+// this function doesn't have existence check
+const vlist&
+uGraph::adjlist( vid_t v ) const{
+    if( data.find(v) != data.end() )
+        return data[v];
+}
+
+// return the vertices' set
 void
-uGraph::vtx_set(vlist* vs){
+uGraph::vtx_set(vlist& vs) const{
 	for(typename ug_t::iterator iter = data.begin();
 		iter != data.end();
 		++iter){
-		vs->insert(iter->first);
+		vs.insert(iter->first);
 	}	
+}
+
+// check whether two vertices connectivity
+bool
+uGraph::if_connect(vid_t v, vid_t u) const{
+    
+    if( adj_size(v) > adj_size(u) ){
+        return ( adjlist(u).find(v) != adjlist(u).end() );
+    } else {
+        return ( adjlist(v).find(u) != adjlist(v).end() );
+    }
+
+    return false;
 }
 

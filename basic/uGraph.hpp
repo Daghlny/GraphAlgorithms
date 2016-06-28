@@ -7,9 +7,6 @@
 #include<string>
 
 #include"types.hpp"
-//#include"Graph.hpp"
-
-//#include"Graph.hpp"
 
 typedef std::map<vid_t, vlist> ug_t;
 
@@ -23,11 +20,13 @@ class uGraph{
 
 		void  read_graph_data(const char *file);
 
-		usize_t           adj_size(vid_t sour);
+		usize_t           adj_size(vid_t sour) const;
 		const vlist&      get_adj (vid_t sour);
-        vlist *           adjlist (vid_t v);
-		usize_t           vtx_sum();
-		void              vtx_set(std::set<vid_t>* vs);
+        const vlist&      adjlist(vid_t v) const;
+        vlist *           adjlist_ptr (vid_t v);
+		usize_t           vtx_sum() const;
+		void              vtx_set(std::set<vid_t>& vs) const;
+        bool              if_connect(vid_t v, vid_t u) const;
 		
 	private:
 		ug_t data;
