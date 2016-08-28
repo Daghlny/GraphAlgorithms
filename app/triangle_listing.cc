@@ -40,3 +40,4 @@ tc_for_ugraph(std::set<tri_t> *res,uGraph* ug){
 	return res->size();	
 
 }
+

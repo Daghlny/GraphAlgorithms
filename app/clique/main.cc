@@ -1,3 +1,4 @@
+
 #include"types.hpp"
 #include"uGraph.hpp"
 
@@ -23,7 +24,7 @@ typedef std::map<std::string, std::string> paras_t;
 void
 output_help_msg(){
 	std::cout << std::endl;
-	std::cout << "This program is used to compute all maximal cliques in a un directed graph." << std::endl;
+	std::cout << "This program is used to compute all maximal cliques in a undirected graph." << std::endl;
 	std::cout << "Author: Ritchie Lee" << std::endl;
 	std::cout << "The preprocess parameters are below: " << std::endl;
 	std::cout << "-L         the size's lower bound of cliques" << std::endl;

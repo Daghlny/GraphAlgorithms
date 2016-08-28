@@ -1,11 +1,14 @@
 
-#include"types.hpp"
-#include"uGraph.hpp"
+#include "types.hpp"
+#include "uGraph.hpp"
 
-#include<set>
-#include<algorithm>
-#include<fstream>
-#include<iostream>
+#include <set>
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <utility>
+#include <map>
+#include <string>
 
 #ifndef __clique_file_path
 #define __clique_file_path "~/all_cliques.txt"
@@ -20,8 +23,8 @@ std::string  get_option_string(std::string);
 int          get_option_int(std::string);
 
 // functions below is in this file
-adj_t get_insct(adj_t *old, adj_t *ngbs);
-void  print_adj(char *str, adj_t a);
+vlist get_insct(vlist *old, vlist *ngbs);
+void  print_adj(char *str, vlist a);
 
 
 // this function uses Born-Kerbosch algorithm
@@ -32,10 +35,10 @@ void  print_adj(char *str, adj_t a);
 
 void
 clique_enum( uGraph *g,
-			 adj_t c, 
-		     adj_t cand, 
-			 adj_t ncand,
-			 void (*output_func)(adj_t *),
+			 vlist c, 
+		     vlist cand, 
+			 vlist ncand,
+			 void (*output_func)(vlist *),
 			 size_t low_bound){
 
 	if(cand.size() == 0 && ncand.size() == 0){
@@ -53,11 +56,11 @@ clique_enum( uGraph *g,
 			 * but erase() will let v invalid in for loop's condition
 			*/
 			
-			adj_t::iterator v = cand.begin();
+			vlist::iterator v = cand.begin();
 
 			vid_t tmp = *v;
 			cand.erase(v);
-			adj_t ngbs = g->get_adj(tmp);
+			vlist ngbs = g->get_adj(tmp);
 			c.insert(tmp);
 
 			clique_enum(g, c, 
@@ -76,11 +79,11 @@ clique_enum( uGraph *g,
 
 
 // compute two vertex sets' intersetion
-adj_t
-get_insct(adj_t *old, adj_t *ngbs){
+vlist
+get_insct(vlist *old, vlist *ngbs){
 	
-	adj_t res;
-	std::insert_iterator<adj_t> iter(res, res.begin());
+	vlist res;
+	std::insert_iterator<vlist> iter(res, res.begin());
 	std::set_intersection(old->begin(),  old->end(), 
 						  ngbs->begin(), ngbs->end(), 
 						  iter);
@@ -93,10 +96,10 @@ get_insct(adj_t *old, adj_t *ngbs){
 
 std::ofstream file;
 void
-clique_write_file(adj_t *res){
+clique_write_file(vlist *res){
 
 	
-	for(adj_t::iterator iter = res->begin();
+	for(vlist::iterator iter = res->begin();
 		iter != res->end();
 		++iter)
 		file << *iter << " ";
@@ -105,10 +108,10 @@ clique_write_file(adj_t *res){
 }
 
 void
-clique_output_screen(adj_t *res){
+clique_output_screen(vlist *res){
 	
 	std::cout << "clique: ";
-	for(adj_t::iterator iter = res->begin();
+	for(vlist::iterator iter = res->begin();
 		iter != res->end();
 		++iter)
 		std::cout << *iter << ", ";
@@ -119,10 +122,10 @@ clique_output_screen(adj_t *res){
 
 // this section is used for debugging
 void
-print_adj(char *str, adj_t a){
+print_adj(char *str, vlist a){
 
 	std::cout << str << ' ';
-	for(adj_t::const_iterator iter = a.begin();
+	for(vlist::const_iterator iter = a.begin();
 		iter != a.end();
 		++iter)
 		std::cout << *iter << ' ';
@@ -136,9 +139,11 @@ print_adj(char *str, adj_t a){
 
 int
 main(int argc, char **argv) {
-    
-    if( argc < 2 && argc > 3 ){
+
+    if( argc < 2 || argc > 3 ){
         std::cout << "Parameters wrong" << std::endl;
+        std::cout << "First parameter is input graph data file,"; 
+        std::cout << "Second is output path" << std::endl;
         return -1;
     }
 
@@ -154,11 +159,11 @@ main(int argc, char **argv) {
     max_clique_size = 0;
     clique_num      = 0;
 
-    adj_t *cand = new adj_t();
-    g->vtx_set(cand);
-    adj_t c, ncand;
+    vlist cand;
+    g->vertex_set(cand);
+    vlist c, ncand;
 
-    clique_enum(g, c, *cand, ncand, clique_write_file, 1);
+    clique_enum(g, c, cand, ncand, clique_write_file, 1);
 
     file.close();
 
