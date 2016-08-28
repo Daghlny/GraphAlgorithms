@@ -64,6 +64,7 @@ uGraph::adj_size(vid_t sour) const {
     ug_t::const_iterator it = data.find(sour);
     if( it != data.cend() )
         return it->second.size();
+    return 0;
 }
 
 // return the adjacency list of certain vertex
@@ -73,6 +74,9 @@ uGraph::get_adj(vid_t sour) const {
     ug_t::const_iterator it = data.find(sour);
     if( it != data.cend() )
         return it->second;
+    std::cout << "error in get_adj(vid_t)" << std::endl;
+    exit(0);
+    return it->second;
 }
 
 // return the size of vertices' set
@@ -116,6 +120,9 @@ uGraph::adjlist( vid_t v ) const{
     ug_t::const_iterator it = data.find(v);
     if( it != data.cend() )
         return it->second;
+    std::cout << "error in adjlist(vid_t)" << std::endl;
+    exit(0);
+    return it->second;
 }
 
 // return the vertices' set

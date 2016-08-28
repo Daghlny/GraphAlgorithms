@@ -7,8 +7,8 @@
 
 #clique_compute.out: ./clique_bfs.cc ../impl/uGraph.cc
 #	g++ -Wall -std=c++11 -I ../basic/ ./clique_bfs.cc ../impl/uGraph.cc -o clique_compute.out
-clique_bfs.out: ./clique_bfs.cc ../impl/uGraph.cc
-	g++ -std=c++0x -ggdb -Wall -I ../basic/ ./clique_bfs.cc ../impl/uGraph.cc -o clique_bfs.out
+clique_bfs.out: ./clique_bfs.cc ../../src/uGraph.cc
+	g++ -std=c++0x -ggdb -Wall -I ../../include/ ./clique_bfs.cc ../../src/uGraph.cc -o clique_bfs.out
 #
 
 #clique_bfs_without_flag.out: ./clique_bfs_without_flag.cc ../impl/uGraph.cc

@@ -114,7 +114,7 @@ void        do_task( task_t   *t,
                      void    (*output_func)(vlist *));
 
 // return a new vlist that is the intersection of @v1 and @v2
-vlist*   get_intsct(vlist *v1, vlist *v2);
+vlist*   get_intsct(const vlist *v1, const vlist *v2);
 
 // return a vlist that contains all elems in @vl and @v
 vlist*   set_insert_copy(vlist *vl, vid_t v);
@@ -135,16 +135,16 @@ void
 clique_compute( uGraph *g,
                 void (*output_func)(vlist *)){
     
-    vlist *allvtx = new vlist();
-    g->vtx_set(allvtx);
+    vlist allvtx;
+    g->vertex_set(allvtx);
 
     tasklist tasks(NULL, NULL);
 
-    for(vlist::const_iterator iter = allvtx->begin();
-        iter != allvtx->end();
+    for(vlist::const_iterator iter = allvtx.begin();
+        iter != allvtx.end();
         ++iter){
     
-        vlist *tmp_cand = new vlist( *(g->adjlist(*iter)) );
+        vlist *tmp_cand = new vlist(g->adjlist(*iter));
         task_t *tmp = new task_t( tmp_cand, set_insert_copy(*iter), *iter);
         tasks.insert_tail(tmp);
     }
@@ -194,7 +194,7 @@ do_task( task_t   *t,
         if( *iter < t->flag )
             continue;
 
-        vlist *adjl = g->adjlist(*iter);
+        const vlist *adjl = &(g->adjlist(*iter));
         vlist *candidate = get_intsct(adjl, t->cand);
 
         if(candidate->size() != 0){
@@ -216,14 +216,14 @@ do_task( task_t   *t,
 }
 
 vlist* 
-get_intsct(vlist *v1, vlist *v2){
+get_intsct(const vlist *v1, const vlist *v2){
     
     vlist *res    = new vlist();
-    vlist *lo     = v1->size() > v2->size() ? v2 : v1;
-    vlist *check  = lo == v1 ? v2 : v1;
+    const vlist *lo     = v1->size() > v2->size() ? v2 : v1;
+    const vlist *check  = lo == v1 ? v2 : v1;
 
-    for( vlist::const_iterator iter = lo->begin();
-         iter != lo->end();
+    for( vlist::const_iterator iter = lo->cbegin();
+         iter != lo->cend();
          ++iter )
         if( check->find(*iter) != check->end() )
             res->insert(*iter);
