@@ -16,16 +16,16 @@ uGraph::read_graph_data(const char *file){
 	std::ifstream in_f;
 	in_f.open(file);
 
-	char buff[100];
+	char buff[1024];
 
 	while(!in_f.eof()){
-		in_f.getline(buff, 100);
+		in_f.getline(buff, 1024);
 		if(buff[0] == '#')
 			continue;
 		if(!isdigit(buff[0]))
 			break;
 		std::string line(buff);
-		std::string::size_type tab_pos = line.find_first_of(' ', 0);
+		std::string::size_type tab_pos = line.find_first_of('\t', 0);
 		vid_t sour = atoi(line.substr(0, tab_pos).c_str());
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 
@@ -35,7 +35,7 @@ uGraph::read_graph_data(const char *file){
 	in_f.close();
 }
 
-// add a new edge into the @data, this function is private
+// add a new edge into the @data, this function is protected
 void
 uGraph::add_edge(vid_t sour, vid_t dest){
 
@@ -68,6 +68,7 @@ uGraph::adj_size(vid_t sour) const {
 }
 
 // return the adjacency list of certain vertex
+// this function is old API, recommand @adjlist(vid_t) instead
 const vlist& 
 uGraph::get_adj(vid_t sour) const {
 	//return data[sour];

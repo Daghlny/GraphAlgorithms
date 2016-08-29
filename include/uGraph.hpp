@@ -14,6 +14,8 @@ typedef std::map<vid_t, vlist> ug_t;
 // the objects of this class represent a undirected graph
 // the class supply some basic operations
 // data of a uGraph connot be changed after the building phase
+//
+// @Warning: recommand @adjlist(vid_t) instead of @get_adj(vid_t)
 class uGraph: public Graph{
 	public:
 		uGraph(){}
