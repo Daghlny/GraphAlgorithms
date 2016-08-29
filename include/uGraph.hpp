@@ -30,6 +30,7 @@ class uGraph: public Graph{
 		void              vertex_set(std::set<vid_t>& vs) const;
         bool              if_connect(vid_t v, vid_t u) const;
         void              clear_data();
+        ug_t&             get_ugraph_data();
 
     protected:
 		void  read_graph_data(const char *file);
