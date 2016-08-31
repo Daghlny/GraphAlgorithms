@@ -25,7 +25,7 @@ uGraph::read_graph_data(const char *file){
 		if(!isdigit(buff[0]))
 			break;
 		std::string line(buff);
-		std::string::size_type tab_pos = line.find_first_of(' ', 0);
+		std::string::size_type tab_pos = line.find_first_of('\t', 0);
 		vid_t sour = atoi(line.substr(0, tab_pos).c_str());
 		vid_t dest = atoi(line.substr(tab_pos, line.size()-tab_pos).c_str());
 

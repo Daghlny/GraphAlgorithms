@@ -2,6 +2,7 @@
 #include <map>
 #include <set>
 #include <iostream>
+#include <stdlib.h>
 
 #include "types.hpp"
 #include "uGraph.hpp"
@@ -10,19 +11,33 @@
 int
 main(int argc, char **argv){
 
-    if( argc != 2 ){
-        std::cout << "ProgramName InputGraphFile" << std::endl;
+    if( argc != 3 ){
+        std::cout << "ProgramName InputGraphFile OutputToggle" << std::endl;
         exit(0);
     }
 
+    std::cout << "Begin constructing graph..." << std::endl;
     uGraph g(argv[1]);
+    std::cout << "finish reading data..." << std::endl;
     
     vid_t curr_vertex = 0;
     int degeneracy = 0;
     vid_t degeneracy_vertex = 0;
     ug_t& data = g.get_ugraph_data();
 
+    const int toggle = atoi(argv[2]);
+    vid_t total_vertex_num = g.vertex_num();
+    vid_t flag = total_vertex_num / 10 * 9;
+    vid_t decrement = total_vertex_num / 10;
+    int   percentage = 10;
+
     while(g.vertex_num() != 0){
+
+        if( g.vertex_num() == flag ){
+            std::cout << "have finished " << percentage << "% vertices" << std::endl;
+            percentage += 10;
+            flag -= decrement;
+        }
         usize_t smallest_degree = g.vertex_num();
 
         /* get the smallest degree and this vertex */
@@ -38,7 +53,8 @@ main(int argc, char **argv){
             degeneracy = smallest_degree;
             degeneracy_vertex = curr_vertex;
         }
-        std::cout << curr_vertex << ' ' << smallest_degree << std::endl;
+        if( toggle )
+            std::cout << curr_vertex << ' ' << smallest_degree << std::endl;
 
         /* 
          * firstly, remove the @curr_vertex in all its neibors' adjlist
