@@ -39,12 +39,6 @@ struct tasklist {
     void remove_tail(){
         
         --len;
-        /*
-        std::cout << "Cand: ";
-        print_vlist(tail->cand);
-        std::cout << std::endl;
-        */
-
         if(tail == NULL && head == NULL){
             return ;
         } else if(tail != NULL && head != NULL && tail != head){
@@ -151,7 +145,7 @@ clique_compute( uGraph *g,
 
     clique_num = 0;
     max_clique_size = 0;
-    // main loop, keep process the tasks linkedlist until no tasks remain
+    // main loop, keep process the tasks linkedlist until no tasks remaining
     while( tasks.head != NULL ){
         
         std::cout << "remaining tasks: " << tasks.len << std::endl;
@@ -168,16 +162,7 @@ do_task( task_t   *t,
          uGraph   *g,
          void    (*output_func)(vlist *) ){
     
-    /* this section just for debugging
-     *
-    std::cout << " *** begin *** " << std::endl;
-    print_vlist(t->c);
-    print_vlist(t->cand);
-    std::cout << " *** end *** " << std::endl;
-    */
-
     if( t->cand->size() == 0 ){
-        //std::cout << "hehe" << std::endl;
         clique_num++;
         output_func(t->c);
         max_clique_size = std::max(max_clique_size, t->c->size());
@@ -187,10 +172,8 @@ do_task( task_t   *t,
 
     for( vlist::const_iterator iter = t->cand->begin();
          iter != t->cand->end();
-         ++iter ){
-
-        //std::cout << t->flag << '\t' << *iter << std::endl;
-        
+         ++iter )
+    {
         if( *iter < t->flag )
             continue;
 
@@ -231,20 +214,6 @@ get_intsct(const vlist *v1, const vlist *v2){
     return res;
 }
 
-/*
-vlist*
-get_intsct(vlist *v1, vlist *v2){
-    
-    vlist *res = new vlist();
-    vlist *lo  = v1->size() > v2->size() ? v2 : v1;
-    vlist *ch  = lo == v1 ? v2 : v1;
-
-    for( vlist::const_iterator iter = lo->begin();
-         iter != lo->end();
-         ++iter)
-        if( e )
-}
-*/
 
 void
 release_task(task_t *t){
@@ -253,6 +222,7 @@ release_task(task_t *t){
     delete t->c;
     delete t;
 }
+
 
 vlist*
 set_insert_copy( vlist* vl, vid_t v){
