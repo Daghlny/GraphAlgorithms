@@ -34,15 +34,12 @@ void  print_adj(char *str, vlist a);
 // @low_bound means cliques' size at least bigger than it.
 
 void
-clique_enum( uGraph *g,
-			 vlist c, 
-		     vlist cand, 
-			 vlist ncand,
-			 void (*output_func)(vlist *),
-			 size_t low_bound){
+clique_enum( uGraph *g, vlist c, vlist cand, vlist ncand, void (*output_func)(vlist *), size_t low_bound){
 
-	if(cand.size() == 0 && ncand.size() == 0){
-		if(c.size() >= low_bound){
+	if(cand.size() == 0 && ncand.size() == 0)
+    {
+		if(c.size() >= low_bound)
+        {
             clique_num++;
             max_clique_size = std::max(max_clique_size, c.size());
 			output_func(&c);
@@ -52,8 +49,8 @@ clique_enum( uGraph *g,
 	else
 		while(!cand.empty()){
 			/*
-			 * this section used iterator v with for loop
-			 * but erase() will let v invalid in for loop's condition
+			 * this section used iterator v with for-loop
+			 * but erase() will let v invalid in for-loop's condition
 			*/
 			
 			vlist::iterator v = cand.begin();
